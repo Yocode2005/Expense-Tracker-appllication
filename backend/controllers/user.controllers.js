@@ -183,7 +183,7 @@ const updateUserDetails = async(req,res) => {
   }
 }
 // to update user password
-const chnageCurrentUserPassword = async(req,res) => {
+const changeCurrentUserPassword = async(req,res) => {
     const {oldPassword, newPassword} = req.body
     if(!oldPassword || !newPassword  || newPassword.length < 8){
         return res.status(400).json({
@@ -212,4 +212,4 @@ const chnageCurrentUserPassword = async(req,res) => {
         message : "Password updated successfully"
     })
 }
-export { registerUser, loginUser, getCurrentUser, updateUserDetails, chnageCurrentUserPassword };
+export { registerUser, loginUser, getCurrentUser, updateUserDetails, changeCurrentUserPassword };
