@@ -122,5 +122,94 @@ const loginUser = async(req,res) => {
 
 }
 
+// to get login user details
+const getCurrentUser = async(req,res) => {
+    try {
+      const user = await User.findById(req.user._id).select("-password -refreshToken") // we are selecting all fields except password and refresh token because we do not want to send them in response
+      if(!user){
+        return res.status(404).json({
+            success : false,
+            message : "User not found"
+        })
+      }
+      return res.status(200).json({
+          success : true,
+          message : "User found",
+          user
+      })
 
-export { registerUser, loginUser };
+    } catch (error) {
+      return res.status(500).json({
+          success : false,
+          message : "Failed to get user details"
+      })
+    }
+}
+// to update user details
+const updateUserDetails = async(req,res) => {
+  const {name, email} = req.body
+  if(!name || !email || !validator.isEmail(email)){
+    return res.status(400).json({
+        success : false,
+        message : "Invalid name or email"
+    })
+  }
+
+  try {
+    const existingUser = await User.findOne({email})
+    if(existingUser && existingUser._id.toString() !== req.user._id.toString()){
+        return res.status(400).json({
+            success : false,
+            message : "User already exists with this email"
+        })
+    }
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        { name, email: email.toLowerCase() },
+        { new: true,runValidators: true }
+    ).select("-password -refreshToken")
+
+    return res.status(200).json({
+        success : true,
+        message : "User details updated successfully",
+        user
+    })
+
+  } catch (error) {
+    return res.status(500).json({
+        success : false,
+        message : "Failed to update user details"
+    })
+  }
+}
+// to update user password
+const chnageCurrentUserPassword = async(req,res) => {
+    const {oldPassword, newPassword} = req.body
+    if(!oldPassword || !newPassword  || newPassword.length < 8){
+        return res.status(400).json({
+            success : false,
+            message : "All fields are required"
+        })
+    }
+    const user = await User.findById(req.user._id)
+    if(!user){
+        return res.status(404).json({
+            success : false,
+            message : "User not found"
+        })
+    }
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+    if(!isPasswordCorrect){
+        return res.status(400).json({
+            success : false,
+            message : "Invalid old password"
+        })
+    }
+    user.password = newPassword
+    await user.save({validateBeforeSave : true})
+    return res.status(200).json({
+        success : true,
+        message : "Password updated successfully"
+    })
+}
+export { registerUser, loginUser, getCurrentUser, updateUserDetails, chnageCurrentUserPassword };
