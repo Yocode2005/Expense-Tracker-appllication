@@ -1,7 +1,9 @@
-import { User } from "../models/user.model.js";
+import {asyncHandler} from "../utils/asyncHandler.js";
+import { User } from "../models/user.models.js";
 import validator from "validator";
+import jwt from "jsonwebtoken";
 
-const generateAccessTokenAndRefreshToken = async(userId) => {
+const generateAccessAndRefereshTokens = async(userId) => {
     try {
       const user = await User.findById(userId)
       const accessToken = user.generateAccessToken()
@@ -14,7 +16,7 @@ const generateAccessTokenAndRefreshToken = async(userId) => {
     }
 }
 
-const registerUser = async (req, res) => {
+const registerUser = asyncHandler(async(req, res) => {
   // taking data from frontend
   const { name, email, password } = req.body;
   // validating data
@@ -41,15 +43,16 @@ const registerUser = async (req, res) => {
       message: "User already exists with this email",
     });
   }
-  // creating new user
-  const newUser = new User({
-    name,
-    email: email.toLowerCase(),
-    password: hashedPassword,
-  });
+   // create user object - create entry in db
+       const newUser = await User.create({
+        name,
+        email : email.toLowerCase(), 
+        password,
+    })
+  //console.log(newUser);
 
   // remove password and refresh token field from response
-  const createdUser = await User.findById(user._id).select(
+  const createdUser = await User.findById(newUser._id).select(
     "-password -refreshToken", // remove password and refresh token from response
   );
 
@@ -65,10 +68,10 @@ const registerUser = async (req, res) => {
   return res.status(201).json({
     success: true,
     message: "User registered successfully",
-    user: createdUser,
+   // user: createdUser,
   });
-};
-const loginUser = async(req,res) => {
+});
+const loginUser = asyncHandler(async(req,res) => {
    // taking data from frontend
    //find the user
     //password check
@@ -120,10 +123,10 @@ const loginUser = async(req,res) => {
         )
     ) 
 
-}
+});
 
 // to get login user details
-const getCurrentUser = async(req,res) => {
+const getCurrentUser = asyncHandler(async(req,res) => {
     try {
       const user = await User.findById(req.user._id).select("-password -refreshToken") // we are selecting all fields except password and refresh token because we do not want to send them in response
       if(!user){
@@ -144,9 +147,9 @@ const getCurrentUser = async(req,res) => {
           message : "Failed to get user details"
       })
     }
-}
+});
 // to update user details
-const updateUserDetails = async(req,res) => {
+const updateUserDetails = asyncHandler(async(req,res) => {
   const {name, email} = req.body
   if(!name || !email || !validator.isEmail(email)){
     return res.status(400).json({
@@ -181,9 +184,9 @@ const updateUserDetails = async(req,res) => {
         message : "Failed to update user details"
     })
   }
-}
+});
 // to update user password
-const changeCurrentUserPassword = async(req,res) => {
+const changeCurrentUserPassword = asyncHandler(async(req,res) => {
     const {oldPassword, newPassword} = req.body
     if(!oldPassword || !newPassword  || newPassword.length < 8){
         return res.status(400).json({
@@ -211,5 +214,5 @@ const changeCurrentUserPassword = async(req,res) => {
         success : true,
         message : "Password updated successfully"
     })
-}
+});
 export { registerUser, loginUser, getCurrentUser, updateUserDetails, changeCurrentUserPassword };
