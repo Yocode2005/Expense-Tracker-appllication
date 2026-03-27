@@ -1,6 +1,7 @@
 import {asyncHandler} from "../utils/asyncHandler.js";
 import { User } from "../models/user.models.js";
 import validator from "validator";
+import {ApiResponse} from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 
 const generateAccessAndRefereshTokens = async(userId) => {
@@ -9,7 +10,7 @@ const generateAccessAndRefereshTokens = async(userId) => {
       const accessToken = user.generateAccessToken()
       const refreshToken = user.generateRefreshToken()
       user.refreshToken = refreshToken
-      await user.save(validateBeforeSave = false) // we are not validating before save because we are only updating refresh token field and it is not required in user schema
+      await user.save({validateBeforeSave: false}) // we are not validating before save because we are only updating refresh token field and it is not required in user schema
       return { accessToken, refreshToken }
     } catch (error) {
       throw new Error("Failed to generate access token and refresh token");
@@ -93,6 +94,7 @@ const loginUser = asyncHandler(async(req,res) => {
             message : "Invalid email or password"
         })
     }
+   // console.log(user);
     const isPasswordCorrect = await user.isPasswordCorrect(password)
     if(!isPasswordCorrect){
         return res.status(400).json({
