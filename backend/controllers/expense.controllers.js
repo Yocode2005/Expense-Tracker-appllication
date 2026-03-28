@@ -1,5 +1,4 @@
-import { Expense } from "../models/expense.models";
-import getDateRange from "../utils/dateFilter";
+import { Expense } from "../models/expense.models.js";
 import{ApiError} from "../utils/ApiError.js";
 import{ApiResponse} from "../utils/ApiResponse.js";
 import{asyncHandler} from "../utils/asyncHandler.js";
@@ -131,12 +130,5 @@ const getExpenseOverview = asyncHandler(async(req, res) => {
     }
 });
 
-export {
-    addExpense,
-    getAllExpenses,
-    updateExpense,
-    deleteExpense,
-    downloadExpenses,
-    getExpenseOverview
-};
+export {addExpense,getAllExpenses,updateExpense,deleteExpense,downloadExpenses,getExpenseOverview};
 
