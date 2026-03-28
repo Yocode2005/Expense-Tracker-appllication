@@ -49,3 +49,28 @@ const getAllIncomes = asyncHandler(async(req, res) => {
     }
 });
 
+// Controller function to update an income entry
+const updateIncome = asyncHandler(async(req, res) => {
+    // todolist: get user id from req.user
+    // todolist: fetch the income entry from db
+    // todolist: update the income entry
+    // todolist: send response to frontend
+     const {id} = req.params;
+    const userId = req.user._id;
+    const {description, amount, category, date} = req.body;
+    try {
+        const income = await Income.findOneAndUpdate({userId, _id: id}, {
+            description,
+            amount,
+            category,
+            date: new Date(date)
+        }, {new: true}); // find the income entry and update it, return the updated document
+        if(!income){
+            throw new ApiError(404, "Income not found")
+        }
+        await income.save();
+        res.status(200).json(new ApiResponse(true, "Income updated successfully", income))
+    } catch (error) {
+        throw new ApiError(500, "Error while updating income")
+    }
+});
