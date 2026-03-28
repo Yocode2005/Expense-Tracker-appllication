@@ -1,4 +1,4 @@
-import {Income} from '../models/income.model.js';
+import {Income} from '../models/income.models.js';
 import {asyncHandler} from "../utils/asyncHandler.js";
 import {ApiResponse} from "../utils/ApiResponse.js";
 import {ApiError} from "../utils/ApiError.js";
@@ -148,4 +148,4 @@ const getIncomeOverview = asyncHandler(async(req, res) => {
         throw new ApiError(500, "Error while fetching income overview")
     }
 });
-export {addIncome, getAllIncomes, updateIncome, deleteIncome, downloadIncomes, getIncomeOverview}
+export {addIncome, getAllIncomes, updateIncome, deleteIncome, downloadIncomes, getIncomeOverview};

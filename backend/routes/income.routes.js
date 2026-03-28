@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {addIncome, getAllIncomes, updateIncome, deleteIncome, downloadIncomes, getIncomeOverview} from '../controllers/income.controller.js';
+import {addIncome, getAllIncomes, updateIncome, deleteIncome, downloadIncomes, getIncomeOverview} from '../controllers/income.controllers.js';
 import { verifyJWT } from '../middleware/auth.middleware.js';
 
 const incomeRouter = Router();
