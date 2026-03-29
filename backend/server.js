@@ -20,6 +20,7 @@ connectDB();
 import userRoutes from "./routes/user.routes.js"
 import incomeRoutes from "./routes/income.routes.js"
 import expenseRouter from './routes/expense.routes.js'
+import dashboardRouter from './routes/dashboard.routes.js';
 
 // routes declaration
 // app.get('/',(req,res) => {
@@ -28,5 +29,6 @@ import expenseRouter from './routes/expense.routes.js'
 app.use("/api/users", userRoutes);
 app.use("/api/incomes",incomeRoutes);
 app.use("/api/expense",expenseRouter);
+app.use("/api/dashboard", dashboardRouter);
 
 app.listen(PORT,() => {console.log(`Server is running on port ${PORT}`)})
