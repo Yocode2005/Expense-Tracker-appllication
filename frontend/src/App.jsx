@@ -1,10 +1,38 @@
-import React from 'react'
 
-function App() {
+import React, { useState } from 'react'
+import { Route, Routes,useNavigate } from 'react-router-dom'
+import Layout from './components/Layout.jsx'
+import Dashboard from './pages/Dashboard.jsx'
+
+const App = () => {
+  const [user,setUser] = React.useState(null);
+  const [token,setToken] = React.useState(null);
+  const navigate = useNavigate();
+
+  const clearAuth = () => {
+    try {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("token");
+    } catch (error) {
+      console.error("Error clearing auth data:", error);
+    }
+    setUser(null);
+    setToken(null);
+  }
+  const handleLogout = () => {
+    clearAuth();
+    navigate("/login");
+  }
   return (
-    <div>
-      <h1 className='text-3xl font-bold underline'>Expense Tracker</h1>
-    </div>
+   <>
+   <Routes>
+      <Route element={<Layout />}>
+        <Route path='/' element={<Dashboard />} />
+      </Route>
+   </Routes>
+   </>
   )
 }
 
