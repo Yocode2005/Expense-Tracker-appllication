@@ -110,9 +110,17 @@ const renderMenuItem = ({ text, path, icon }) => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
-                ></motion.div>
+                >
+                  <h2 className="text-sm font-bold text-gray-800 truncate">{username}</h2>
+                  <p className="text-xs text-gray-500 truncate">{email} </p>
+                </motion.div>
                 )}
               </div>
+            </div>
+            <div className='flex-1 overflow-y-auto py-4 custom-scrollbar'>
+              <ul className={sidebarStyles.menuList.base}>
+                {MENU_ITEMS.map(renderMenuItem)}
+              </ul>
             </div>
         </div>
     </motion.div>
