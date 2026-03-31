@@ -2,8 +2,8 @@
 import { useRef,useState,useEffect } from 'react'
 import { sidebarStyles, cn } from '../assets/dummyStyles'
 import {motion} from 'framer-motion'
-import { Link, useLocation,useNavigate } from 'react-router-dom'
-import { ArrowDown, ArrowUp, Home, User } from 'lucide-react';
+import { Link,  useLocation,useNavigate } from 'react-router-dom'
+import { ArrowDown, ArrowUp, HelpCircle, Home, LogOut, LucideSquareDashedMousePointer, User } from 'lucide-react';
 
 
 const MENU_ITEMS = [
@@ -121,6 +121,19 @@ const renderMenuItem = ({ text, path, icon }) => {
               <ul className={sidebarStyles.menuList.base}>
                 {MENU_ITEMS.map(renderMenuItem)}
               </ul>
+            </div>
+            <div className={cn(sidebarStyles.footerContainer.base,isCollapsed ? sidebarStyles.footerContainer.collapsed : sidebarStyles.footerContainer.expanded)}>
+             <Link className={cn(sidebarStyles.footerLink.base)} to="https://www.hexagondigitalservices.com/contact">
+             <HelpCircle size={20} className='text-gray-500'></HelpCircle>
+             {!isCollapsed && <span>Support</span>}
+             </Link>
+             <button onClick={handleLogout} className={cn(
+              sidebarStyles.logoutButton.base,
+              isCollapsed && sidebarStyles.logoutButton.collapsed
+             )}>
+              <LogOut  size={20}  className='text-gray-500'/>
+              {!isCollapsed && <span>LogOut</span>}
+             </button>
             </div>
         </div>
     </motion.div>
