@@ -1,9 +1,9 @@
 
 import { useRef,useState,useEffect } from 'react'
 import { sidebarStyles, cn } from '../assets/dummyStyles'
-import {motion} from 'framer-motion'
+import {AnimatePresence, motion} from 'framer-motion'
 import { Link,  useLocation,useNavigate } from 'react-router-dom'
-import { ArrowDown, ArrowUp, HelpCircle, Home, LogOut, LucideSquareDashedMousePointer, User } from 'lucide-react';
+import { ArrowDown, ArrowUp, HelpCircle, Home, LogOut, Menu, User, X } from 'lucide-react';
 
 
 const MENU_ITEMS = [
@@ -140,6 +140,73 @@ const renderMenuItem = ({ text, path, icon }) => {
     <motion.button onClick={() => setMobileOpen((prev) => !prev)} className={sidebarStyles.mobileMenuButton}whileHover={{scale: 1.05 }} whileTap={{scale: 0.95}}>
       {mobileOpen ? <X size={24} /> : <Menu size={24} />}
     </motion.button>
+    <AnimatePresence>
+      {mobileOpen && (
+        
+          <motion.div
+            className={sidebarStyles.mobileOverlay}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div 
+              className={sidebarStyles.mobileBackdrop}
+              onClick={() => setMobileOpen(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+            
+            <motion.div
+              ref={sidebarRef}
+              className={sidebarStyles.mobileSidebar.base}
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            >
+
+              <div className='relative h-full flex flex-col'>
+                <div className={sidebarStyles.mobileHeader}>
+                  <div className={sidebarStyles.mobileUserContainer}>
+                    <div className={sidebarStyles.userInitials.base}>{initial}</div>
+                    <div>
+                      <h2 className="text-lg font-bold text-gray-800">{username}</h2>
+                      <p className="text-sm text-gray-500">{email}</p>
+                    </div>
+                  </div>
+                  <button onClick={() => setMobileOpen(false)} className={sidebarStyles.mobileCloseButton}>
+                    <X size={24} className="text-gray-600"/>
+                  </button>
+                </div>
+                <div className='flex-1 overflow-y-auto py-4'>
+                  <ul className={sidebarStyles.mobileMenuList}>
+                    {MENU_ITEMS.map(({ text, path, icon }) => (
+                      <motion.li key={text} whileTap={{ scale: 0.98 }}>
+                        <Link
+                          to={path}
+                          onClick={() => setMobileOpen(false)}
+                          className={cn(
+                            sidebarStyles.mobileMenuItem.base,
+                            pathname === path 
+                              ? sidebarStyles.mobileMenuItem.active 
+                              : sidebarStyles.mobileMenuItem.inactive
+                          )}
+                        >
+                          <span className={pathname === path ? sidebarStyles.menuIcon.active : sidebarStyles.menuIcon.inactive}>
+                            {icon}
+                          </span>
+                          <span>{text}</span>
+                        </Link>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              </motion.div>
+              </motion.div>
+      )}
+    </AnimatePresence>
     </>
   )
 }
