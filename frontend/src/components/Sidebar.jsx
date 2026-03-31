@@ -137,6 +137,9 @@ const renderMenuItem = ({ text, path, icon }) => {
             </div>
         </div>
     </motion.div>
+    <motion.button onClick={() => setMobileOpen((prev) => !prev)} className={sidebarStyles.mobileMenuButton}whileHover={{scale: 1.05 }} whileTap={{scale: 0.95}}>
+      {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+    </motion.button>
     </>
   )
 }
