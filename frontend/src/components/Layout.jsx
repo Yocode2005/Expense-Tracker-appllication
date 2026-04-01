@@ -3,9 +3,9 @@ import { Activity, useEffect, useMemo, useState } from 'react'
 import {styles} from '../assets/dummyStyles.js'
 import Navbar from './Navbar.jsx'
 import Sidebar from './Sidebar.jsx'
-import { ArrowUp, Car, CreditCard, DollarSign, Gift, Home, PiggyBank, ShoppingCart, Utensils, Zap } from 'lucide-react';
+import { ArrowDown, ArrowUp, Car, CreditCard, DollarSign, Gift, Home, PiggyBank, ShoppingCart, TrendingUp, Utensils, Zap } from 'lucide-react';
 import axios from 'axios';
-import { get } from 'mongoose';
+// import { get } from 'mongoose';
 
 
 const API_BASE = import.meta.env.VITE_BASE_URL || "http://localhost:5000/api";
@@ -383,7 +383,20 @@ const Layout = ({onLogout,user}) => {
               </p>
             </div>
           </div>
-          <div></div>
+          <div className={styles.grid.main}>
+            <div className={styles.grid.leftColumn}>
+              <div className={styles.cards.base}>
+                <div className={styles.cards.header}>
+                    <h3 className={styles.cards.title}>
+                      <TrendingUp className=" w-6 h-6 text-teal-500"/>
+                      Financial Overview
+                    </h3>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
         </div>
     </div>
   )
