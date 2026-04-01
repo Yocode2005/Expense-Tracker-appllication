@@ -436,10 +436,22 @@ const Layout = ({onLogout,user}) => {
                                     </p>
                                   </div>
                                 </div>
-                                <span></span>
+                                <span className={styles.colors.transaction.text(type)}>
+                                    {type === "income" ? "+" : "-"}${Number(amount)}
+                                </span>
                               </div>
                             )
                           })}
+                          {transactions.length === 0 ? (
+                            <div className={styles.transactions.emptyState}>
+                           <div className={styles.transactions.emptyIconContainer}>
+                            <Clock className={styles.transactions.emptyIcon} />
+                           </div>
+                           <p className={styles.transactions.emptyText}>No recent transaction</p>
+                            </div>
+                          ) : (
+                            <div></div>
+                          )}
                         </div>
                       </div>
                     </div>
