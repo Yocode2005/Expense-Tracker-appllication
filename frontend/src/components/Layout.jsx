@@ -1,13 +1,27 @@
-
-import { Activity, useEffect, useMemo, useState } from 'react'
-import {styles} from '../assets/dummyStyles.js'
-import Navbar from './Navbar.jsx'
-import Sidebar from './Sidebar.jsx'
-import { ArrowDown, ArrowUp, Car, Clock, CreditCard, DollarSign, Gift, Home, Info, PiggyBank, RefreshCw, ShoppingCart, TrendingUp, Utensils, Zap } from 'lucide-react';
-import axios from 'axios';
-import { Outlet } from 'react-router-dom';
+import { Activity, useEffect, useMemo, useState } from "react";
+import { styles } from "../assets/dummyStyles.js";
+import Navbar from "./Navbar.jsx";
+import Sidebar from "./Sidebar.jsx";
+import {
+  ArrowDown,
+  ArrowUp,
+  Car,
+  Clock,
+  CreditCard,
+  DollarSign,
+  Gift,
+  Home,
+  Info,
+  PiggyBank,
+  RefreshCw,
+  ShoppingCart,
+  TrendingUp,
+  Utensils,
+  Zap,
+} from "lucide-react";
+import axios from "axios";
+import { Outlet } from "react-router-dom";
 // import { get } from 'mongoose';
-
 
 const API_BASE = import.meta.env.VITE_BASE_URL || "http://localhost:5000/api";
 const CATEGORY_ICONS = {
@@ -22,7 +36,6 @@ const CATEGORY_ICONS = {
   Freelance: <CreditCard className="w-4 h-4" />,
   Savings: <PiggyBank className="w-4 h-4" />,
 };
-
 
 // to filter
 const filterTransactions = (transactions, frame) => {
@@ -39,7 +52,7 @@ const filterTransactions = (transactions, frame) => {
     }
     case "monthly":
       return transactions.filter(
-        (t) => new Date(t.date).getMonth() === now.getMonth()
+        (t) => new Date(t.date).getMonth() === now.getMonth(),
       );
     default:
       return transactions;
@@ -56,18 +69,16 @@ const safeArrayFromResponse = (res) => {
   return [];
 };
 
-
-const Layout = ({onLogout,user}) => {
-   const [transactions, setTransactions] = useState([]);
+const Layout = ({ onLogout, user }) => {
+  const [transactions, setTransactions] = useState([]);
   const [timeFrame, setTimeFrame] = useState("monthly");
   const [loading, setLoading] = useState(false);
   const [showAllTransactions, setShowAllTransactions] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-
   // to fetch the transactions from the server side
-  
+
   const fetchTransactions = async () => {
     try {
       setLoading(true);
@@ -105,13 +116,13 @@ const Layout = ({onLogout,user}) => {
     } catch (err) {
       console.error(
         "Failed to fetch transactions",
-        err?.response || err.message || err
+        err?.response || err.message || err,
       );
     } finally {
       setLoading(false);
     }
   };
- // to add the transition either income or expense
+  // to add the transition either income or expense
   const addTransaction = async (transaction) => {
     try {
       const token = localStorage.getItem("token");
@@ -124,12 +135,12 @@ const Layout = ({onLogout,user}) => {
     } catch (err) {
       console.error(
         "Failed to add transaction",
-        err?.response || err.message || err
+        err?.response || err.message || err,
       );
       throw err;
     }
   };
-// to update any transaction
+  // to update any transaction
   const editTransaction = async (id, transaction) => {
     try {
       const token = localStorage.getItem("token");
@@ -144,12 +155,12 @@ const Layout = ({onLogout,user}) => {
     } catch (err) {
       console.error(
         "Failed to edit transaction",
-        err?.response || err.message || err
+        err?.response || err.message || err,
       );
       throw err;
     }
   };
-// to delete any transaction
+  // to delete any transaction
   const deleteTransaction = async (id, type) => {
     try {
       const token = localStorage.getItem("token");
@@ -161,7 +172,7 @@ const Layout = ({onLogout,user}) => {
     } catch (err) {
       console.error(
         "Failed to delete transaction",
-        err?.response || err.message || err
+        err?.response || err.message || err,
       );
       throw err;
     }
@@ -173,7 +184,7 @@ const Layout = ({onLogout,user}) => {
 
   const filteredTransactions = useMemo(
     () => filterTransactions(transactions, timeFrame),
-    [transactions, timeFrame]
+    [transactions, timeFrame],
   ); // filter with timeframe
 
   const stats = useMemo(() => {
@@ -182,7 +193,7 @@ const Layout = ({onLogout,user}) => {
     thirtyDaysAgo.setDate(now.getDate() - 30);
 
     const last30DaysTransactions = transactions.filter(
-      (t) => new Date(t.date) >= thirtyDaysAgo
+      (t) => new Date(t.date) >= thirtyDaysAgo,
     );
 
     const last30DaysIncome = last30DaysTransactions
@@ -204,7 +215,7 @@ const Layout = ({onLogout,user}) => {
     const savingsRate =
       last30DaysIncome > 0
         ? Math.round(
-            ((last30DaysIncome - last30DaysExpenses) / last30DaysIncome) * 100
+            ((last30DaysIncome - last30DaysExpenses) / last30DaysIncome) * 100,
           )
         : 0;
 
@@ -225,7 +236,7 @@ const Layout = ({onLogout,user}) => {
         ? Math.round(
             ((last30DaysExpenses - previous30DaysExpenses) /
               previous30DaysExpenses) *
-              100
+              100,
           )
         : 0;
 
@@ -248,9 +259,9 @@ const Layout = ({onLogout,user}) => {
       timeFrame === "daily"
         ? "Today"
         : timeFrame === "weekly"
-        ? "This Week"
-        : "This Month",
-    [timeFrame]
+          ? "This Week"
+          : "This Month",
+    [timeFrame],
   );
 
   const outletContext = {
@@ -266,7 +277,7 @@ const Layout = ({onLogout,user}) => {
 
   const getSavingsRating = (rate) =>
     rate > 30 ? "Excellent" : rate > 20 ? "Good" : "Needs improvement";
-// to filter using category
+  // to filter using category
   const topCategories = useMemo(
     () =>
       Object.entries(
@@ -275,190 +286,209 @@ const Layout = ({onLogout,user}) => {
           .reduce((acc, t) => {
             acc[t.category] = (acc[t.category] || 0) + Number(t.amount);
             return acc;
-          }, {})
+          }, {}),
       )
         .sort((a, b) => b[1] - a[1])
         .slice(0, 5),
-    [transactions]
+    [transactions],
   );
 
   const displayedTransactions = showAllTransactions
     ? transactions
     : transactions.slice(0, 4);
 
-
   return (
     <div className={styles.layout.root}>
-        <Navbar  user={user} onLogout={onLogout} />
-        <Sidebar user={user} isCollapsed={sidebarCollapsed}
-        setIsCollapsed={setSidebarCollapsed} />
-        <div className={styles.layout.mainContainer(sidebarCollapsed)}>
-          <div className={styles.header.container}>
-            <div>
-              <h1 className={styles.header.title}>Dashboard</h1>
-              <p className={styles.header.subtitle}>Welcome back</p>
-            </div>
-          </div>
-          <div className={styles.statCards.grid}>
-            <div className={styles.statCards.card}>
-              <div className={styles.statCards.cardHeader}>
-                <div>
-                  <p className={styles.statCards.cardTitle}>Total Balance</p>
-                  <p className={styles.statCards.cardValue}>
-                    ${stats.allTimeSavings.toLocaleString("en-US",{
-                      maximumFractionDigits: 2,
-                    })}
-                  </p>
-                </div>
-                <div className={styles.statCards.iconContainer("teal")}>
-                  <DollarSign className={styles.statCards.icon("teal")} />
-                </div>
-              </div>
-              <p className={styles.statCards.cardFooter}>
-                <span className='text-teal-600 font-medium'>
-                  +${stats.last30DaysCount.toLocaleString()}
-                </span>{" "}
-                this month
-              </p>
-            </div>
-            {/* for income */}
-            <div className={styles.statCards.card}>
-              <div className={styles.statCards.cardHeader}>
-                <div>
-                  <p className={styles.statCards.cardTitle}>Monthly Income</p>
-                  <p className={styles.statCards.cardValue}>
-                    ${stats.last30DaysIncome.toLocaleString("en-US",{
-                      maximumFractionDigits: 2,
-                    })}
-                  </p>
-                </div>
-                <div className={styles.statCards.iconContainer("green")}>
-                  <ArrowUp className={styles.statCards.icon("green")} />
-                </div>
-              </div>
-              <p className={styles.statCards.cardFooter}>
-                <span className='text-green-600 font-medium'>
-                  +12.5%
-                </span>{" "}
-                from last month
-              </p>
-            </div>
-              {/* for expenses */}
-                    <div className={styles.statCards.card}>
-              <div className={styles.statCards.cardHeader}>
-                <div>
-                  <p className={styles.statCards.cardTitle}>Monthly Expense</p>
-                  <p className={styles.statCards.cardValue}>
-                    ${stats.last30DaysExpenses.toLocaleString("en-US",{
-                      maximumFractionDigits: 2,
-                    })}
-                  </p>
-                </div>
-                <div className={styles.statCards.iconContainer("orange")}>
-                  <ArrowDown className={styles.statCards.icon("orange")} />
-                </div>
-              </div>
-              <p className={styles.statCards.cardFooter}>
-                <span className={`${styles.colors.expenseChange(stats.expenseChange)} font-medium`}>
-                  {stats.expenseChange > 0 ? "+" : ""}
-                  {stats.expenseChange}%
-                </span>{" "}
-                from last month
-              </p>
-            </div>
-              {/* for savings */}
-              <div className={styles.statCards.card}>
-              <div className={styles.statCards.cardHeader}>
-                <div>
-                  <p className={styles.statCards.cardTitle}>Saving Rate</p>
-                  <p className={styles.statCards.cardValue}>
-                    {stats.savingsRate}%
-                  </p>
-                </div>
-                <div className={styles.statCards.iconContainer("blue")}>
-                  <PiggyBank className={styles.statCards.icon("blue")} />
-                </div>
-              </div>
-              <p className={styles.statCards.cardFooter}>
-                {getSavingsRating(stats.savingsRate)}
-              </p>
-            </div>
-          </div>
-          <div className={styles.grid.main}>
-            <div className={styles.grid.leftColumn}>
-              <div className={styles.cards.base}>
-                <div className={styles.cards.header}>
-                    <h3 className={styles.cards.title}>
-                      <TrendingUp className=" w-6 h-6 text-teal-500"/>
-                      Financial Overview
-                      <span className='text-sm text-gray-500 font-normal'>
-                        ({timeFrameLabel})
-                      </span>
-                    </h3>
-                </div>
-                    <Outlet context={outletContext} />
-              </div>
-            </div>
-                    {/* right side */}
-                    <div className={styles.grid.rightColumn}>
-                      <div className={styles.cards.base}>
-                        <div className={styles.transactions.cardHeader}>
-                          <h3 className={styles.transactions.cardTitle}>
-                            <Clock className="w-6 h-6 text-purple-600" />
-                            Recent Transactions
-                          </h3>
-                          <button onClick={fetchTransactions} disabled={loading} className={styles.transactions.refreshButton}>
-                            <RefreshCw className={styles.transactions.refreshIcon(loading)} />
-                          </button>
-                        </div>
-                        <div className={styles.transactions.dataStackingInfo}>
-                          <Info className={styles.transactions.dataStackingIcon} />
-                          <span>
-                            Transactions are stacked by date (newest first)
-                          </span>
-                        </div>
-                        <div className={styles.transactions.listContainer}>
-                          {displayedTransactions.map((transaction) => {
-                            const {id,type,category,description,data,amount} = transaction;
-                            return(
-                              <div key={id} className={styles.transactions.transactionItem}>
-                                <div className='flex items-center gap-1 md:gap-4 lg:gap-3'>
-                                  <div className={`p-2 rounded-lg ${styles.colors.transaction.bg(type)}`}>
-                                    {CATEGORY_ICONS[category] || (
-                                      <DollarSign className={styles.transactions.icon} />
-                                    )}
-                                  </div>
-                                  <div className={styles.transactions.details}>
-                                    <p className={styles.transactions.description}>{description}</p>
-                                    <p className={styles.transactions.meta}>
-                                      {new Date(date).toLocaleDateString()}
-                                      <span className='ml-2 capitalize'>{category}</span>
-                                    </p>
-                                  </div>
-                                </div>
-                                <span className={styles.colors.transaction.text(type)}>
-                                    {type === "income" ? "+" : "-"}${Number(amount)}
-                                </span>
-                              </div>
-                            )
-                          })}
-                          {transactions.length === 0 ? (
-                            <div className={styles.transactions.emptyState}>
-                           <div className={styles.transactions.emptyIconContainer}>
-                            <Clock className={styles.transactions.emptyIcon} />
-                           </div>
-                           <p className={styles.transactions.emptyText}>No recent transaction</p>
-                            </div>
-                          ) : (
-                            <div></div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+      <Navbar user={user} onLogout={onLogout} />
+      <Sidebar
+        user={user}
+        isCollapsed={sidebarCollapsed}
+        setIsCollapsed={setSidebarCollapsed}
+      />
+      <div className={styles.layout.mainContainer(sidebarCollapsed)}>
+        <div className={styles.header.container}>
+          <div>
+            <h1 className={styles.header.title}>Dashboard</h1>
+            <p className={styles.header.subtitle}>Welcome back</p>
           </div>
         </div>
+        <div className={styles.statCards.grid}>
+          <div className={styles.statCards.card}>
+            <div className={styles.statCards.cardHeader}>
+              <div>
+                <p className={styles.statCards.cardTitle}>Total Balance</p>
+                <p className={styles.statCards.cardValue}>
+                  $
+                  {stats.allTimeSavings.toLocaleString("en-US", {
+                    maximumFractionDigits: 2,
+                  })}
+                </p>
+              </div>
+              <div className={styles.statCards.iconContainer("teal")}>
+                <DollarSign className={styles.statCards.icon("teal")} />
+              </div>
+            </div>
+            <p className={styles.statCards.cardFooter}>
+              <span className="text-teal-600 font-medium">
+                +${stats.last30DaysCount.toLocaleString()}
+              </span>{" "}
+              this month
+            </p>
+          </div>
+          {/* for income */}
+          <div className={styles.statCards.card}>
+            <div className={styles.statCards.cardHeader}>
+              <div>
+                <p className={styles.statCards.cardTitle}>Monthly Income</p>
+                <p className={styles.statCards.cardValue}>
+                  $
+                  {stats.last30DaysIncome.toLocaleString("en-US", {
+                    maximumFractionDigits: 2,
+                  })}
+                </p>
+              </div>
+              <div className={styles.statCards.iconContainer("green")}>
+                <ArrowUp className={styles.statCards.icon("green")} />
+              </div>
+            </div>
+            <p className={styles.statCards.cardFooter}>
+              <span className="text-green-600 font-medium">+12.5%</span> from
+              last month
+            </p>
+          </div>
+          {/* for expenses */}
+          <div className={styles.statCards.card}>
+            <div className={styles.statCards.cardHeader}>
+              <div>
+                <p className={styles.statCards.cardTitle}>Monthly Expense</p>
+                <p className={styles.statCards.cardValue}>
+                  $
+                  {stats.last30DaysExpenses.toLocaleString("en-US", {
+                    maximumFractionDigits: 2,
+                  })}
+                </p>
+              </div>
+              <div className={styles.statCards.iconContainer("orange")}>
+                <ArrowDown className={styles.statCards.icon("orange")} />
+              </div>
+            </div>
+            <p className={styles.statCards.cardFooter}>
+              <span
+                className={`${styles.colors.expenseChange(stats.expenseChange)} font-medium`}
+              >
+                {stats.expenseChange > 0 ? "+" : ""}
+                {stats.expenseChange}%
+              </span>{" "}
+              from last month
+            </p>
+          </div>
+          {/* for savings */}
+          <div className={styles.statCards.card}>
+            <div className={styles.statCards.cardHeader}>
+              <div>
+                <p className={styles.statCards.cardTitle}>Saving Rate</p>
+                <p className={styles.statCards.cardValue}>
+                  {stats.savingsRate}%
+                </p>
+              </div>
+              <div className={styles.statCards.iconContainer("blue")}>
+                <PiggyBank className={styles.statCards.icon("blue")} />
+              </div>
+            </div>
+            <p className={styles.statCards.cardFooter}>
+              {getSavingsRating(stats.savingsRate)}
+            </p>
+          </div>
+        </div>
+        <div className={styles.grid.main}>
+          <div className={styles.grid.leftColumn}>
+            <div className={styles.cards.base}>
+              <div className={styles.cards.header}>
+                <h3 className={styles.cards.title}>
+                  <TrendingUp className=" w-6 h-6 text-teal-500" />
+                  Financial Overview
+                  <span className="text-sm text-gray-500 font-normal">
+                    ({timeFrameLabel})
+                  </span>
+                </h3>
+              </div>
+              <Outlet context={outletContext} />
+            </div>
+          </div>
+          {/* right side */}
+          <div className={styles.grid.rightColumn}>
+            <div className={styles.cards.base}>
+              <div className={styles.transactions.cardHeader}>
+                <h3 className={styles.transactions.cardTitle}>
+                  <Clock className="w-6 h-6 text-purple-600" />
+                  Recent Transactions
+                </h3>
+                <button
+                  onClick={fetchTransactions}
+                  disabled={loading}
+                  className={styles.transactions.refreshButton}
+                >
+                  <RefreshCw
+                    className={styles.transactions.refreshIcon(loading)}
+                  />
+                </button>
+              </div>
+              <div className={styles.transactions.dataStackingInfo}>
+                <Info className={styles.transactions.dataStackingIcon} />
+                <span>Transactions are stacked by date (newest first)</span>
+              </div>
+              <div className={styles.transactions.listContainer}>
+                {displayedTransactions.map((transaction) => {
+                  const { id, type, category, description, data, amount } =
+                    transaction;
+                  return (
+                    <div
+                      key={id}
+                      className={styles.transactions.transactionItem}
+                    >
+                      <div className="flex items-center gap-1 md:gap-4 lg:gap-3">
+                        <div
+                          className={`p-2 rounded-lg ${styles.colors.transaction.bg(type)}`}
+                        >
+                          {CATEGORY_ICONS[category] || (
+                            <DollarSign className={styles.transactions.icon} />
+                          )}
+                        </div>
+                        <div className={styles.transactions.details}>
+                          <p className={styles.transactions.description}>
+                            {description}
+                          </p>
+                          <p className={styles.transactions.meta}>
+                            {new Date(date).toLocaleDateString()}
+                            <span className="ml-2 capitalize">{category}</span>
+                          </p>
+                        </div>
+                      </div>
+                      <span className={styles.colors.transaction.text(type)}>
+                        {type === "income" ? "+" : "-"}${Number(amount)}
+                      </span>
+                    </div>
+                  );
+                })}
+                {transactions.length === 0 ? (
+                  <div className={styles.transactions.emptyState}>
+                    <div className={styles.transactions.emptyIconContainer}>
+                      <Clock className={styles.transactions.emptyIcon} />
+                    </div>
+                    <p className={styles.transactions.emptyText}>
+                      No recent transaction
+                    </p>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
