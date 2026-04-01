@@ -430,8 +430,13 @@ const Layout = ({onLogout,user}) => {
                                   </div>
                                   <div className={styles.transactions.details}>
                                     <p className={styles.transactions.description}>{description}</p>
+                                    <p className={styles.transactions.meta}>
+                                      {new Date(date).toLocaleDateString()}
+                                      <span className='ml-2 capitalize'>{category}</span>
+                                    </p>
                                   </div>
                                 </div>
+                                <span></span>
                               </div>
                             )
                           })}
