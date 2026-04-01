@@ -3,8 +3,9 @@ import { Activity, useEffect, useMemo, useState } from 'react'
 import {styles} from '../assets/dummyStyles.js'
 import Navbar from './Navbar.jsx'
 import Sidebar from './Sidebar.jsx'
-import { ArrowUp, Car, CreditCard, Gift, Home, PiggyBank, ShoppingCart, Utensils, Zap } from 'lucide-react';
+import { ArrowUp, Car, CreditCard, DollarSign, Gift, Home, PiggyBank, ShoppingCart, Utensils, Zap } from 'lucide-react';
 import axios from 'axios';
+import { get } from 'mongoose';
 
 
 const API_BASE = import.meta.env.VITE_BASE_URL || "http://localhost:5000/api";
@@ -303,13 +304,86 @@ const Layout = ({onLogout,user}) => {
                 <div>
                   <p className={styles.statCards.cardTitle}>Total Balance</p>
                   <p className={styles.statCards.cardValue}>
-                    ${stats}
+                    ${stats.allTimeSavings.toLocaleString("en-US",{
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                 </div>
+                <div className={styles.statCards.iconContainer("teal")}>
+                  <DollarSign className={styles.statCards.icon("teal")} />
+                </div>
               </div>
+              <p className={styles.statCards.cardFooter}>
+                <span className='text-teal-600 font-medium'>
+                  +${stats.last30DaysCount.toLocaleString()}
+                </span>{" "}
+                this month
+              </p>
+            </div>
+            {/* for income */}
+            <div className={styles.statCards.card}>
+              <div className={styles.statCards.cardHeader}>
+                <div>
+                  <p className={styles.statCards.cardTitle}>Monthly Income</p>
+                  <p className={styles.statCards.cardValue}>
+                    ${stats.last30DaysIncome.toLocaleString("en-US",{
+                      maximumFractionDigits: 2,
+                    })}
+                  </p>
+                </div>
+                <div className={styles.statCards.iconContainer("green")}>
+                  <ArrowUp className={styles.statCards.icon("green")} />
+                </div>
+              </div>
+              <p className={styles.statCards.cardFooter}>
+                <span className='text-green-600 font-medium'>
+                  +12.5%
+                </span>{" "}
+                from last month
+              </p>
+            </div>
+              {/* for expenses */}
+                    <div className={styles.statCards.card}>
+              <div className={styles.statCards.cardHeader}>
+                <div>
+                  <p className={styles.statCards.cardTitle}>Monthly Expense</p>
+                  <p className={styles.statCards.cardValue}>
+                    ${stats.last30DaysExpenses.toLocaleString("en-US",{
+                      maximumFractionDigits: 2,
+                    })}
+                  </p>
+                </div>
+                <div className={styles.statCards.iconContainer("orange")}>
+                  <ArrowDown className={styles.statCards.icon("orange")} />
+                </div>
+              </div>
+              <p className={styles.statCards.cardFooter}>
+                <span className={`${styles.colors.expenseChange(stats.expenseChange)} font-medium`}>
+                  {stats.expenseChange > 0 ? "+" : ""}
+                  {stats.expenseChange}%
+                </span>{" "}
+                from last month
+              </p>
+            </div>
+              {/* for savings */}
+              <div className={styles.statCards.card}>
+              <div className={styles.statCards.cardHeader}>
+                <div>
+                  <p className={styles.statCards.cardTitle}>Saving Rate</p>
+                  <p className={styles.statCards.cardValue}>
+                    {stats.savingsRate}%
+                  </p>
+                </div>
+                <div className={styles.statCards.iconContainer("blue")}>
+                  <PiggyBank className={styles.statCards.icon("blue")} />
+                </div>
+              </div>
+              <p className={styles.statCards.cardFooter}>
+                {getSavingsRating(stats.savingsRate)}
+              </p>
             </div>
           </div>
-
+          <div></div>
         </div>
     </div>
   )
