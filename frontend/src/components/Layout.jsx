@@ -417,6 +417,25 @@ const Layout = ({onLogout,user}) => {
                             Transactions are stacked by date (newest first)
                           </span>
                         </div>
+                        <div className={styles.transactions.listContainer}>
+                          {displayedTransactions.map((transaction) => {
+                            const {id,type,category,description,data,amount} = transaction;
+                            return(
+                              <div key={id} className={styles.transactions.transactionItem}>
+                                <div className='flex items-center gap-1 md:gap-4 lg:gap-3'>
+                                  <div className={`p-2 rounded-lg ${styles.colors.transaction.bg(type)}`}>
+                                    {CATEGORY_ICONS[category] || (
+                                      <DollarSign className={styles.transactions.icon} />
+                                    )}
+                                  </div>
+                                  <div className={styles.transactions.details}>
+                                    <p className={styles.transactions.description}>{description}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
                       </div>
                     </div>
           </div>
