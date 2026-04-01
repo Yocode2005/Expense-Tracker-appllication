@@ -521,9 +521,28 @@ const Layout = ({ onLogout, user }) => {
                       {category}
                     </span>
                   </div>
-                  <span></span>
+                  <span className={styles.categories.categoryAmount}>
+                    ${amount}
+                  </span>
                  </div> 
                 ))}
+              </div>
+              <div className={styles.categories.summaryContainer}>
+                <div className={styles.categories.summaryGrid}>
+                  <div className={styles.categories.summaryIncomeCard}>
+                    <p className={styles.categories.summaryTitle}>Total Income</p>
+                    <p className={styles.categories.summaryValue}>
+                      ${stats.allTimeIncome.toLocaleString()}
+                    </p>
+                  </div>
+                  
+                  <div className={styles.categories.summaryExpenseCard}>
+                    <p className={styles.categories.summaryTitle}>Total Expenses</p>
+                    <p className={styles.categories.summaryValue}>
+                      ${stats.allTimeExpenses.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
