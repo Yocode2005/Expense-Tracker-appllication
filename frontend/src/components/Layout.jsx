@@ -3,8 +3,9 @@ import { Activity, useEffect, useMemo, useState } from 'react'
 import {styles} from '../assets/dummyStyles.js'
 import Navbar from './Navbar.jsx'
 import Sidebar from './Sidebar.jsx'
-import { ArrowDown, ArrowUp, Car, CreditCard, DollarSign, Gift, Home, PiggyBank, ShoppingCart, TrendingUp, Utensils, Zap } from 'lucide-react';
+import { ArrowDown, ArrowUp, Car, Clock, CreditCard, DollarSign, Gift, Home, Info, PiggyBank, RefreshCw, ShoppingCart, TrendingUp, Utensils, Zap } from 'lucide-react';
 import axios from 'axios';
+import { Outlet } from 'react-router-dom';
 // import { get } from 'mongoose';
 
 
@@ -390,12 +391,34 @@ const Layout = ({onLogout,user}) => {
                     <h3 className={styles.cards.title}>
                       <TrendingUp className=" w-6 h-6 text-teal-500"/>
                       Financial Overview
+                      <span className='text-sm text-gray-500 font-normal'>
+                        ({timeFrameLabel})
+                      </span>
                     </h3>
                 </div>
-
+                    <Outlet context={outletContext} />
               </div>
             </div>
-
+                    {/* right side */}
+                    <div className={styles.grid.rightColumn}>
+                      <div className={styles.cards.base}>
+                        <div className={styles.transactions.cardHeader}>
+                          <h3 className={styles.transactions.cardTitle}>
+                            <Clock className="w-6 h-6 text-purple-600" />
+                            Recent Transactions
+                          </h3>
+                          <button onClick={fetchTransactions} disabled={loading} className={styles.transactions.refreshButton}>
+                            <RefreshCw className={styles.transactions.refreshIcon(loading)} />
+                          </button>
+                        </div>
+                        <div className={styles.transactions.dataStackingInfo}>
+                          <Info className={styles.transactions.dataStackingIcon} />
+                          <span>
+                            Transactions are stacked by date (newest first)
+                          </span>
+                        </div>
+                      </div>
+                    </div>
           </div>
         </div>
     </div>
