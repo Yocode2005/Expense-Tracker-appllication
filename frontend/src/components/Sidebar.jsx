@@ -202,6 +202,16 @@ const renderMenuItem = ({ text, path, icon }) => {
                     ))}
                   </ul>
                 </div>
+                <div className={sidebarStyles.mobileFooter}>
+                  <Link  onClick={() =>setMobileOpen(false)} to="https://www.hexagondigitalservices.com/contact" className={sidebarStyles.mobileFooterLink}>
+                    <HelpCircle size={20} className='text-gray-500'></HelpCircle>
+                    <span>Support</span>
+                  </Link>
+                  <button onClick={handleLogout} className={sidebarStyles.mobileLogoutButton}>
+                    <LogOut size={20} className='text-gray-500'/>
+                    <span>LogOut</span>
+                  </button>
+                </div>
               </div>
               </motion.div>
               </motion.div>
