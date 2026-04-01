@@ -14,6 +14,7 @@ import {
   Gift,
   Home,
   Info,
+  PieChart,
   PiggyBank,
   RefreshCw,
   ShoppingCart,
@@ -499,6 +500,30 @@ const Layout = ({ onLogout, user }) => {
                     </button>
                   </div>
                 )}
+              </div>
+            </div>
+            {/* spending by category card */}
+            <div className={styles.cards.base}>
+              <h3 className={styles.categories.title}>
+                <PieChart className={styles.categories.titleIcon} />
+                Spending by Category
+              </h3>
+              <div className={styles.categories.list}>
+                {topCategories.map(([category,amount]) =>(
+                 <div key={category} className={styles.categories.categoryItem}>
+                  <div className="flex items-center gap-3">
+                    <div className={styles.categories.categoryIconContainer}>
+                      {CATEGORY_ICONS[category] || (
+                        <DollarSign className={styles.categories.categoryIcon}/>
+                      )}
+                    </div>
+                    <span className={styles.categories.categoryName}>
+                      {category}
+                    </span>
+                  </div>
+                  <span></span>
+                 </div> 
+                ))}
               </div>
             </div>
           </div>
