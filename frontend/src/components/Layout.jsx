@@ -6,6 +6,8 @@ import {
   ArrowDown,
   ArrowUp,
   Car,
+  ChevronDown,
+  ChevronUp,
   Clock,
   CreditCard,
   DollarSign,
@@ -480,7 +482,22 @@ const Layout = ({ onLogout, user }) => {
                     </p>
                   </div>
                 ) : (
-                  <div></div>
+                  <div className={styles.transactions.viewAllContainer}>
+                    <button onClick={() => setShowAllTransactions(!showAllTransactions)}
+                      className={styles.transactions.viewAllButton}>
+                      {showAllTransactions ? (
+                        <>
+                        <ChevronUp className="w-5 h-5" />
+                        show less
+                        </>
+                      ) : (
+                        <>
+                       <ChevronDown className="w-5 h-5" />
+                        View All Transactions ({transactions.length}) 
+                        </>
+                      )}
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
