@@ -539,7 +539,8 @@ const Layout = ({ onLogout, user }) => {
                   <div className={styles.categories.summaryExpenseCard}>
                     <p className={styles.categories.summaryTitle}>Total Expenses</p>
                     <p className={styles.categories.summaryValue}>
-                      ${stats.allTimeExpenses.toLocaleString()}
+                      ${stats.allTimeExpenses.toLocaleString()} // use all time expenses here to show total spending
+                      
                     </p>
                   </div>
                 </div>
