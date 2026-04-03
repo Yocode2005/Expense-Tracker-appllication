@@ -22,6 +22,12 @@ const App = () => {
     setUser(null);
     setToken(null);
   }
+
+  const handleLogin = (userData,remember = false, tokenFromApi = null) => {
+    presisAuth(userData, tokenFromApi, remember);
+    navigate("/");
+  }
+
   const handleLogout = () => {
     clearAuth();
     navigate("/login");
@@ -30,7 +36,7 @@ const App = () => {
    <>
    <Routes>
 
-      <Route path='/login' element={<Login />} />
+      <Route path='/login' element={<Login onLogin={handleLogin} />} />
 
       <Route element={<Layout />}>
         <Route path='/' element={<Dashboard />} />
