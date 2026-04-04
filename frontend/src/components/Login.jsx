@@ -1,6 +1,8 @@
 import React from 'react'
+import { loginStyles } from '../assets/dummyStyles'
 
-function Login() {
+
+const Login = ({onLogin, API_URL = "http://localhost:5000/api"}) => {
   return (
     <div>Login</div>
   )
