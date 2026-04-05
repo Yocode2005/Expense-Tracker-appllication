@@ -26,6 +26,12 @@ const Login = ({onLogin, API_URL = "http://localhost:5000/api"}) => {
 
   const persistAuth = (profile, token) => {
     const storage = rememberMe ? localStorage : sessionStorage;
+    try {
+      if(token) storage.setItem("token", token);
+      if(profile) storage.setItem("user",JSON.stringify(profile)); 
+    } catch (error) {
+      console.error("Storage Error :", error);
+    }
   }
 
   return (
