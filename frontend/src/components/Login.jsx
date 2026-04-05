@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { loginStyles } from '../assets/dummyStyles'
 import { User } from 'lucide-react'
+import axios from 'axios'
 
 
 const Login = ({onLogin, API_URL = "http://localhost:5000/api"}) => {
@@ -22,6 +23,10 @@ const Login = ({onLogin, API_URL = "http://localhost:5000/api"}) => {
     });
     return res.data;
   };
+
+  const persistAuth = (profile, token) => {
+    const storage = rememberMe ? localStorage : sessionStorage;
+  }
 
   return (
     <div className={loginStyles.pageContainer}>
