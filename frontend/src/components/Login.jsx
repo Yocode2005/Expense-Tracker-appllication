@@ -13,6 +13,10 @@ const Login = ({onLogin, API_URL = "http://localhost:5000/api"}) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  // to fetch profile
+  
+
   return (
     <div className={loginStyles.pageContainer}>
       <div className={loginStyles.cardContainer}>
