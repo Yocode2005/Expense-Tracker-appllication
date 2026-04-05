@@ -15,7 +15,13 @@ const Login = ({onLogin, API_URL = "http://localhost:5000/api"}) => {
   const navigate = useNavigate();
 
   // to fetch profile
-  
+  const fetchProf  = async (token) => {
+    if(!token) return null;
+    const res = await axios.get(`${API_URL}/api/user/me`,{
+      headers :{Authorization: `Bearer ${token}`}
+    });
+    return res.data;
+  };
 
   return (
     <div className={loginStyles.pageContainer}>
