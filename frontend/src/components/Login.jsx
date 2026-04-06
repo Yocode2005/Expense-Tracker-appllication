@@ -36,7 +36,15 @@ const Login = ({onLogin, API_URL = "http://localhost:5000/api"}) => {
 
 // to login
 const handleSubmit = async(e) => {
-    
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    try {
+      
+    } catch (error) {
+      
+    }
 }
 
   return (
