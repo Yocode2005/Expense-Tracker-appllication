@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useState } from 'react' // import useState for managing form state and other states in the component
 import { useNavigate } from 'react-router-dom' // import useNavigate for navigation after login
 import { loginStyles } from '../assets/dummyStyles' // import styles for login component
 import { User } from 'lucide-react' // import User icon from lucide-react
