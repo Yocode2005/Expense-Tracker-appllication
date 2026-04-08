@@ -1,6 +1,6 @@
 
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom' // import useNavigate for navigation after login
 import { loginStyles } from '../assets/dummyStyles' // import styles for login component
 import { User } from 'lucide-react' // import User icon from lucide-react
 import axios from 'axios' // import axios for API calls
