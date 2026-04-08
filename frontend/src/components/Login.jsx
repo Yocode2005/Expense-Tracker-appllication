@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { loginStyles } from '../assets/dummyStyles'
-import { User } from 'lucide-react'
+import { User } from 'lucide-react' // import User icon from lucide-react
 import axios from 'axios' // import axios for API calls
 
 
