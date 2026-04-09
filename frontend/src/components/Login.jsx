@@ -2,7 +2,7 @@
 import { useState } from 'react' // import useState for managing form state and other states in the component
 import { useNavigate } from 'react-router-dom' // import useNavigate for navigation after login
 import { loginStyles } from '../assets/dummyStyles' // import styles for login component
-import { User } from 'lucide-react' // import User icon from lucide-react
+import { Lock, Mail, User } from 'lucide-react' // import User icon from lucide-react
 import axios from 'axios' // import axios for API calls
 
 
@@ -99,6 +99,46 @@ const handleSubmit = async(e) => {
           </div>
           <h1 className={loginStyles.headerTitle}>Welcome Back</h1>
           <p className={loginStyles.headerSubtitle}>Sign in to your ExpenseTracker account</p>
+        </div>
+        <div className={loginStyles.formContainer}>
+          {error && (
+            <div className={loginStyles.errorContainer}>
+              <div className={loginStyles.errorIcon}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+              <span className={loginStyles.errorText}>{error}</span>
+            </div>
+          )}
+          <form onSubmit={handleSubmit}>
+            <div className='mb-6'>
+              <label htmlFor='email' className={loginStyles.label}>
+                Email Address
+              </label>
+              <div className={loginStyles.inputContainer}>
+                <div className={loginStyles.inputIcon}>
+                  <Mail className="w-5 h-5" />
+                </div>
+                <input type='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} className={loginStyles.input} placeholder='your@example.com' required />
+              </div>
+            </div>
+            <div className='mb-6'>
+              <label htmlFor='password' className={loginStyles.label}>
+                Password
+              </label>
+              <div className={loginStyles.inputContainer}>
+                <div className={loginStyles.inputIcon}>
+                  <Lock className="w-5 h-5" />
+                </div>
+                <input type={showPassword ? 'text' : 'password'} id='password' value={password} onChange={(e) => setPassword(e.target.value)} className={loginStyles.passwordInput} placeholder='your password' required />
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
