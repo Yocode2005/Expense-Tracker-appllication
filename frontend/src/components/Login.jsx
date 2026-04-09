@@ -57,10 +57,36 @@ const handleSubmit = async(e) => {
         }
       }
       if(!profile && token){
-        
+        try {
+          profile = await fetchProfile(token);
+        } catch (fetchErr) {
+          console.warn("Could not fresh profile after login token : ",fetchErr);
+          profile = { email };
+        }
       }
-    } catch (error) {
-      
+      if(!profile) profile = { email };
+      persistAuth(profile, token);
+      if(typeof onLogin === "function"){
+        try {
+          onLogin(profile, remberMe,token)
+        } catch (callErr) {
+         console.warn("onLogin threw : ", callErr) ;
+         navigate("/");
+        }
+      } else {
+        navigate("/");
+      }
+      setPassword("");
+    } catch (err) {
+      console.error("Login error:", err?.response || err);
+      const serverMsg =
+        err.response?.data?.message ||
+        (err.response?.data ? JSON.stringify(err.response.data) : null) ||
+        err.message ||
+        "Login failed";
+      setError(serverMsg);
+    } finally{
+      setIsLoading(false);
     }
 }
 
