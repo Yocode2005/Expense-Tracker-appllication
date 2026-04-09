@@ -41,7 +41,24 @@ const handleSubmit = async(e) => {
     setError("");
 
     try {
-      
+      const res = await axios.post(`${API_URL}/api/user/login`,{email,password},{headers: {"Content-Type": "application/json"}},);
+      const data = res.data || {};
+      const token = data.token || null;
+
+      // to derive user profile
+      let profile = data.user ?? null;
+      if(!profile){
+        const copy = {...data};
+        delete copy.token;
+        delete copy.user;
+
+        if(Object.keys(copy).length){
+          profile = copy;
+        }
+      }
+      if(!profile && token){
+        
+      }
     } catch (error) {
       
     }
