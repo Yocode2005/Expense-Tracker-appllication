@@ -1,5 +1,5 @@
 import { useState } from "react"; // import useState for managing form state and other states in the component
-import { useNavigate } from "react-router-dom"; // import useNavigate for navigation after login
+import { Link, useNavigate } from "react-router-dom"; // import useNavigate for navigation after login
 import { loginStyles } from "../assets/dummyStyles"; // import styles for login component
 import { Eye, EyeOff, Lock, Mail, User } from "lucide-react"; // import User icon from lucide-react
 import axios from "axios"; // import axios for API calls
@@ -208,6 +208,14 @@ const Login = ({ onLogin, API_URL = "http://localhost:5000/api" }) => {
               )}
             </button>
           </form>
+          <div className={loginStyles.signUpContainer}>
+            <p className={loginStyles.signUpText}>
+              Dont't have an account?{" "}
+              <Link to="/signup" className={loginStyles.signUpLink}>
+                Create One
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
