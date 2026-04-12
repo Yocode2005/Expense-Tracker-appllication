@@ -4,6 +4,7 @@ import { Route, Routes,useNavigate } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Login from './components/Login.jsx'
+import Signup from './components/Signup.jsx'
 
 const App = () => {
   const [user,setUser] = React.useState(null);
