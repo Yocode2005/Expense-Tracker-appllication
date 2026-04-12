@@ -4,7 +4,7 @@ import { loginStyles } from "../assets/dummyStyles"; // import styles for login 
 import { Eye, EyeOff, Lock, Mail, User } from "lucide-react"; // import User icon from lucide-react
 import axios from "axios"; // import axios for API calls
 
-const Login = ({ onLogin, API_URL = "http://localhost:5000/api" }) => {
+const Login = ({ onLogin, API_URL = "http://localhost:5000" }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +16,7 @@ const Login = ({ onLogin, API_URL = "http://localhost:5000/api" }) => {
   // to fetch profile
   const fetchProfile = async (token) => {
     if (!token) return null;
-    const res = await axios.get(`${API_URL}/api/user/me`, {
+    const res = await axios.get(`${API_URL}/users/me`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return res.data;
@@ -40,7 +40,7 @@ const Login = ({ onLogin, API_URL = "http://localhost:5000/api" }) => {
 
     try {
       const res = await axios.post(
-        `${API_URL}/api/user/login`,
+        `${API_URL}/api/users/login`,
         { email, password },
         { headers: { "Content-Type": "application/json" } },
       );
@@ -73,7 +73,7 @@ const Login = ({ onLogin, API_URL = "http://localhost:5000/api" }) => {
       persistAuth(profile, token);
       if (typeof onLogin === "function") {
         try {
-          onLogin(profile, remberMe, token);
+          onLogin(profile, rememberMe, token);
         } catch (callErr) {
           console.warn("onLogin threw : ", callErr);
           navigate("/");

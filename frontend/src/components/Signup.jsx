@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { signupStyles } from "../assets/dummyStyles";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft, Eye, Lock, Mail, User } from "lucide-react";
 
@@ -234,6 +234,11 @@ const Signup = ({ API_URL = "http://localhost:5000", onSignup }) => {
               "Create Account"
             )}</button>
           </form>
+          <div className={signupStyles.signInContainer}>
+            <p className={signupStyles.signInText}>Already have an account?{" "}
+              <Link to="/login" className={signupStyles.signInLink}>Sign in</Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

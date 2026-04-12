@@ -1,14 +1,47 @@
 
-import React, { useState } from 'react'
-import { Route, Routes,useNavigate } from 'react-router-dom'
+import React, { Children, useEffect, useState } from 'react'
+import { Navigate, Route, Routes,useLocation,useNavigate } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Login from './components/Login.jsx'
 import Signup from './components/Signup.jsx'
 
+const API_URL = "http://localhost:5000";
+
+// to get transsaction from loclal storage
+const getTransactionsFromStorage = () => {
+  const saved  = localStorage.getItem("transactions");
+  return saved ? JSON.parse(saved) : [];
+}
+
+// to protect the routes
+const ProtectedRoutes = ({user,Children}) => {
+  const localToken = localStorage.getItem("token");
+  const sessionToken = sessionStorage.getItem("token");
+  const hasToken = localToken || sessionToken;
+
+  if(!user || !hasToken){
+    return <Navigate to="/login" replace />
+  }
+  return Children;
+};
+
+// to scroll to top when page gets reload or new page is visited
+const ScrollToTop = () => {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo({top : 0,left : 0, behavior : "auto"});
+  },[location.pathname]);
+  return null;
+};
+
+
+
 const App = () => {
   const [user,setUser] = React.useState(null);
   const [token,setToken] = React.useState(null);
+  const [transactions,setTransactions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
 // to save the token and user data in local storage or session storage based on remember me option
@@ -45,6 +78,32 @@ const App = () => {
     setUser(null);
     setToken(null);
   }
+
+  // to update user data both in state and storage
+  const updateUserData = (updatedUser) => {
+    setUser(updatedUser);
+     const localToken = localStorage.getItem("token");
+  const sessionToken = sessionStorage.getItem("token");
+
+  if(localToken){
+    localStorage.setItem('user',JSON.stringify(updatedUser));
+  } else if (sessionToken){
+    sessionStorage.setItem("user",JSON.stringify(updatedUser));
+  }
+  };
+
+  //  try to load user with token when mounted
+  useEffect(() => {
+    (async () => {
+      try {
+      
+    } catch (error) {
+      
+    }
+    })
+  })
+ 
+
 
   const handleLogin = (userData,remember = false, tokenFromApi = null) => {
     persistAuth(userData, tokenFromApi, remember);
