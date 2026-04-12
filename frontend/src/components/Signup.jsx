@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft, Eye, Lock, Mail, User } from "lucide-react";
 
-const Signup = ({ API_URL = "http://localhost:5000/api", onSignup }) => {
+const Signup = ({ API_URL = "http://localhost:5000", onSignup }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -137,10 +137,9 @@ const Signup = ({ API_URL = "http://localhost:5000/api", onSignup }) => {
           {errors.api && <p className={signupStyles.apiError}>{errors.api}</p>}
           <form onSubmit={handleSubmit} noValidate>
             <div className="mb-6">
-              <lable htmlFor="name" className={signupStyles.label}>
-                {" "}
+              <label htmlFor="name" className={signupStyles.label}>
                 Full Name
-              </lable>
+              </label>
               <div className={signupStyles.inputContainer}>
                 <div className={signupStyles.inputIcon}>
                   <User className="w-5 h-5" />
@@ -149,7 +148,7 @@ const Signup = ({ API_URL = "http://localhost:5000/api", onSignup }) => {
                   type="text"
                   id="name"
                   value={name}
-                  onChange={(e) => setName(e.target)}
+                  onChange={(e) => setName(e.target.value)}
                   className={`${signupStyles.input} ${errors.name ? "border-red-300" : "border-gray-200"}`}
                   placeholder="John Doe"
                 ></input>
@@ -160,10 +159,9 @@ const Signup = ({ API_URL = "http://localhost:5000/api", onSignup }) => {
             </div>
 
             <div className="mb-6">
-              <lable htmlFor="email" className={signupStyles.label}>
-                {" "}
+              <label htmlFor="email" className={signupStyles.label}>
                 Email Address
-              </lable>
+              </label>
               <div className={signupStyles.inputContainer}>
                 <div className={signupStyles.inputIcon}>
                   <Mail className="w-5 h-5" />
@@ -172,7 +170,7 @@ const Signup = ({ API_URL = "http://localhost:5000/api", onSignup }) => {
                   type="email"
                   id="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target)}
+                  onChange={(e) => setEmail(e.target.value)}
                   className={`${signupStyles.input} ${errors.email ? "border-red-300" : "border-gray-200"}`}
                   placeholder="your@example.com"
                 ></input>
@@ -183,10 +181,9 @@ const Signup = ({ API_URL = "http://localhost:5000/api", onSignup }) => {
             </div>
 
             <div className="mb-6">
-              <lable htmlFor="password" className={signupStyles.label}>
-                {" "}
+              <label htmlFor="password" className={signupStyles.label}>
                 Password
-              </lable>
+              </label>
               <div className={signupStyles.inputContainer}>
                 <div className={signupStyles.inputIcon}>
                   <Lock className="w-5 h-5" />
@@ -195,7 +192,7 @@ const Signup = ({ API_URL = "http://localhost:5000/api", onSignup }) => {
                   type={showPassword ? "text" : "password"}
                   id="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target)}
+                  onChange={(e) => setPassword(e.target.value)}
                   className={`${signupStyles.input} ${errors.password ? "border-red-300" : "border-gray-200"}`}
                   placeholder="enter your password"
                 ></input>
