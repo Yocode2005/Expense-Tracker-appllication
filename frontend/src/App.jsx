@@ -96,11 +96,52 @@ const App = () => {
   useEffect(() => {
     (async () => {
       try {
+      const localUserRaw = localStorage.getItem("user");
+      const sessionUserRaw = sessionStorage.getItem("user");
+      const localToken = localStorage.getItem("token");
+      const sessionToken = sessionStorage.getItem("token");
+
+      const storedUser = localUserRaw ? JSON.parse(localUserRaw) : sessionUserRaw ? JSON.parse(sessionUserRaw) : null;
+      const storedToken = localToken || sessionToken || null;
+      const tokenFromLocal = !!localToken;
+
+      if(storedUser){
+        setUser(storedUser);
+        setToken(storedToken);
+        setIsLoading(false);
+        return;
+      }
+      if(storedToken){
+        try {
+          const res = await axios.get(`${API_URI}/api/users/me`,{
+            headers : {Authorization : `Bearer ${storedToken}`}
+          });
+          const profile = res.data;
+          persistAuth(profile,storedToken,tokenFromLocal);
+        } catch (fetchErr) {
+          console.warn("Could not fetch profile with the stored token",fetchErr);
+          clearAuth();
+        }
+      }
+    } catch (error) {
+      console.error("error bootstrapping auth : ",error);
+    } finally{
+      setIsLoading(false);
+      try {
+        setTransactions(getTransactionsFromStorage());
+      } catch (txErr) {
+        console.error("Error loading transactions : ",txErr);
+      }
+    }
+    })();
+  },[]);
+
+  useEffect(() => {
+    try {
       
     } catch (error) {
       
     }
-    })
   })
  
 
