@@ -16,7 +16,7 @@ const Login = ({ onLogin, API_URL = "http://localhost:5000" }) => {
   // to fetch profile
   const fetchProfile = async (token) => {
     if (!token) return null;
-    const res = await axios.get(`${API_URL}/users/me`, {
+    const res = await axios.get(`${API_URL}/api/users/me`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return res.data;
@@ -26,6 +26,7 @@ const Login = ({ onLogin, API_URL = "http://localhost:5000" }) => {
     const storage = rememberMe ? localStorage : sessionStorage;
     try {
       if (token) storage.setItem("token", token);
+      
       if (profile) storage.setItem("user", JSON.stringify(profile));
     } catch (error) {
       console.error("Storage Error :", error);
@@ -45,19 +46,20 @@ const Login = ({ onLogin, API_URL = "http://localhost:5000" }) => {
         { headers: { "Content-Type": "application/json" } },
       );
       const data = res.data || {};
-      const token = data.token || null;
-
+      //const token = data.token || null;
+      const payload = data.data || data;
+      const token = payload.accessToken || data.token || null;
       // to derive user profile
-      let profile = data.user ?? null;
-      if (!profile) {
-        const copy = { ...data };
-        delete copy.token;
-        delete copy.user;
+      let profile = payload.user ?? data.user ?? null;
+      // if (!profile && token) {
+      //   const copy = { ...data };
+      //   delete copy.token;
+      //   delete copy.user;
 
-        if (Object.keys(copy).length) {
-          profile = copy;
-        }
-      }
+      //   if (Object.keys(copy).length) {
+      //     profile = copy;
+      //   }
+      // }
       if (!profile && token) {
         try {
           profile = await fetchProfile(token);
