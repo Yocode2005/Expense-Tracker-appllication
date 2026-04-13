@@ -12,8 +12,9 @@ function Navbar({ user: propUser, onLogout }) {
   const navigate = useNavigate();
   const menuRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [localUser,setLocalUser] = useState(null);
 
-  const user = propUser || {
+  const user = propUser || localUser || {
     name: "",
     email: "",
   };
@@ -31,12 +32,12 @@ function Navbar({ user: propUser, onLogout }) {
           },
         });
         const userData = response.data.user || response.data;
-        setUser(userData);
+        setLocalUser(userData);
       } catch (error) {
         console.error("Failed to load profile:", error);
       }
     };
-    if (!propUser) {
+    if (!propUser || !propUser.name) {
       fetchUserData();
     }
   }, [propUser]);
