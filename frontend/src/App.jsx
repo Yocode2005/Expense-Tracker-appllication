@@ -1,51 +1,55 @@
-
-import React, { Children, useEffect, useState } from 'react'
-import { Navigate, Route, Routes,useLocation,useNavigate } from 'react-router-dom'
-import Layout from './components/Layout.jsx'
-import Dashboard from './pages/Dashboard.jsx'
-import Login from './components/Login.jsx'
-import Signup from './components/Signup.jsx'
+import React, { useEffect, useState, children } from "react";
+import axios from "axios";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import Layout from "./components/Layout.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Login from "./components/Login.jsx";
+import Signup from "./components/Signup.jsx";
 
 const API_URL = "http://localhost:5000";
 
 // to get transsaction from loclal storage
 const getTransactionsFromStorage = () => {
-  const saved  = localStorage.getItem("transactions");
+  const saved = localStorage.getItem("transactions");
   return saved ? JSON.parse(saved) : [];
-}
+};
 
 // to protect the routes
-const ProtectedRoutes = ({user,Children}) => {
+const ProtectedRoute = ({ user, children }) => {
   const localToken = localStorage.getItem("token");
   const sessionToken = sessionStorage.getItem("token");
   const hasToken = localToken || sessionToken;
-
-  if(!user || !hasToken){
-    return <Navigate to="/login" replace />
+  console.log(hasToken);
+  if (!user || !hasToken) {
+    return <Navigate to="/login" replace />;
   }
-  return Children;
+  return children;
 };
 
 // to scroll to top when page gets reload or new page is visited
 const ScrollToTop = () => {
   const location = useLocation();
   useEffect(() => {
-    window.scrollTo({top : 0,left : 0, behavior : "auto"});
-  },[location.pathname]);
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
   return null;
 };
 
-
-
 const App = () => {
-  const [user,setUser] = React.useState(null);
-  const [token,setToken] = React.useState(null);
-  const [transactions,setTransactions] = useState([]);
+  const [user, setUser] = React.useState(null);
+  const [token, setToken] = React.useState(null);
+  const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-// to save the token and user data in local storage or session storage based on remember me option
-   const persistAuth = (userObj, tokenStr, remember = false) => {
+  // to save the token and user data in local storage or session storage based on remember me option
+  const persistAuth = (userObj, tokenStr, remember = false) => {
     try {
       if (remember) {
         if (userObj) localStorage.setItem("user", JSON.stringify(userObj));
@@ -65,7 +69,6 @@ const App = () => {
     }
   };
 
-
   const clearAuth = () => {
     try {
       localStorage.removeItem("user");
@@ -77,79 +80,84 @@ const App = () => {
     }
     setUser(null);
     setToken(null);
-  }
+  };
 
   // to update user data both in state and storage
   const updateUserData = (updatedUser) => {
     setUser(updatedUser);
-     const localToken = localStorage.getItem("token");
-  const sessionToken = sessionStorage.getItem("token");
+    const localToken = localStorage.getItem("token");
+    const sessionToken = sessionStorage.getItem("token");
 
-  if(localToken){
-    localStorage.setItem('user',JSON.stringify(updatedUser));
-  } else if (sessionToken){
-    sessionStorage.setItem("user",JSON.stringify(updatedUser));
-  }
+    if (localToken) {
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+    } else if (sessionToken) {
+      sessionStorage.setItem("user", JSON.stringify(updatedUser));
+    }
   };
 
   //  try to load user with token when mounted
   useEffect(() => {
     (async () => {
       try {
-      const localUserRaw = localStorage.getItem("user");
-      const sessionUserRaw = sessionStorage.getItem("user");
-      const localToken = localStorage.getItem("token");
-      const sessionToken = sessionStorage.getItem("token");
+        const localUserRaw = localStorage.getItem("user");
+        const sessionUserRaw = sessionStorage.getItem("user");
+        const localToken = localStorage.getItem("token");
+        const sessionToken = sessionStorage.getItem("token");
 
-      const storedUser = localUserRaw ? JSON.parse(localUserRaw) : sessionUserRaw ? JSON.parse(sessionUserRaw) : null;
-      const storedToken = localToken || sessionToken || null;
-      const tokenFromLocal = !!localToken;
+        const storedUser = localUserRaw
+          ? JSON.parse(localUserRaw)
+          : sessionUserRaw
+            ? JSON.parse(sessionUserRaw)
+            : null;
+        const storedToken = localToken || sessionToken || null;
+        const tokenFromLocal = !!localToken;
 
-      if(storedUser){
-        setUser(storedUser);
-        setToken(storedToken);
+        if (storedUser) {
+          setUser(storedUser);
+          setToken(storedToken);
+          setIsLoading(false);
+          return;
+        }
+        if (storedToken) {
+          try {
+            const res = await axios.get(`${API_URL}/api/users/me`, {
+              headers: { Authorization: `Bearer ${storedToken}` },
+            });
+            const profile = res.data;
+            persistAuth(profile, storedToken, tokenFromLocal);
+          } catch (fetchErr) {
+            console.warn(
+              "Could not fetch profile with the stored token",
+              fetchErr,
+            );
+            clearAuth();
+          }
+        }
+      } catch (error) {
+        console.error("error bootstrapping auth : ", error);
+      } finally {
         setIsLoading(false);
-        return;
-      }
-      if(storedToken){
         try {
-          const res = await axios.get(`${API_URI}/api/users/me`,{
-            headers : {Authorization : `Bearer ${storedToken}`}
-          });
-          const profile = res.data;
-          persistAuth(profile,storedToken,tokenFromLocal);
-        } catch (fetchErr) {
-          console.warn("Could not fetch profile with the stored token",fetchErr);
-          clearAuth();
+          setTransactions(getTransactionsFromStorage());
+        } catch (txErr) {
+          console.error("Error loading transactions : ", txErr);
         }
       }
-    } catch (error) {
-      console.error("error bootstrapping auth : ",error);
-    } finally{
-      setIsLoading(false);
-      try {
-        setTransactions(getTransactionsFromStorage());
-      } catch (txErr) {
-        console.error("Error loading transactions : ",txErr);
-      }
-    }
     })();
-  },[]);
+  }, []);
 
   useEffect(() => {
     try {
-      
-    } catch (error) {
-      
+      localStorage.setItem("transactions", JSON.stringify(transactions));
+    } catch (err) {
+      console.error("error saving transactions : ", err);
     }
-  })
- 
+  }, [transactions]);
 
-
-  const handleLogin = (userData,remember = false, tokenFromApi = null) => {
+  const handleLogin = (userData, remember = false, tokenFromApi = null) => {
     persistAuth(userData, tokenFromApi, remember);
     navigate("/");
-  }
+  };
 
   const handleSignup = (userData, remember = false, tokenFromApi = null) => {
     persistAuth(userData, tokenFromApi, remember);
@@ -159,20 +167,63 @@ const App = () => {
   const handleLogout = () => {
     clearAuth();
     navigate("/login");
+  };
+
+  // transaction helpers
+  const addTransaction = (newTransaction) =>
+    setTransactions((p) => [newTransaction, ...p]);
+  const editTransaction = (id, updatedTransaction) =>
+    setTransactions((p) =>
+      p.map((t) => (t.id === id ? { ...updatedTransaction, id } : t)),
+    );
+  const deleteTransaction = (id) =>
+    setTransactions((p) => p.filter((t) => t.id !== id));
+  const refreshTransactions = () =>
+    setTransactions(getTransactionsFromStorage());
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
   }
+
   return (
-   <>
-   <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route path="/signup" element={<Signup onSignup={handleSignup} />} />
 
-      <Route path='/login' element={<Login onLogin={handleLogin} />} />
-      <Route path='/signup' element={<Signup onSignup={handleSignup} />} />
+        <Route
+          element={
+            <ProtectedRoute user={user}>
+              <Layout user={user} onLogout={handleLogout}
+              transactions={transactions}
+            addTransaction={addTransaction}
+            editTransaction={editTransaction}
+            deleteTransaction={deleteTransaction}
+            refreshTransactions={refreshTransactions} />
+            </ProtectedRoute>
+          }
+        >
+          <Route
+            path="/"
+            element={<Dashboard />}
+            transactions={transactions}
+            addTransaction={addTransaction}
+            editTransaction={editTransaction}
+            deleteTransaction={deleteTransaction}
+            refreshTransactions={refreshTransactions}
+          />
+        </Route>
+      </Routes>
+    </>
+  );
+};
 
-      <Route element={<Layout  user={user} onLogout={handleLogout}/>}>
-        <Route path='/' element={<Dashboard />} />
-      </Route>
-   </Routes>
-   </>
-  )
-}
-
-export default App
+export default App;
