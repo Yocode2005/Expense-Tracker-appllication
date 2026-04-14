@@ -15,6 +15,7 @@ import {
   getPreviousTimeFrameRange,
   getTimeFrameRange,
 } from "../components/Helpers";
+import axios from "axios";
 
 const API_BASE = "http://localhost:5000/api";
 
@@ -329,6 +330,42 @@ const Dashboard = () => {
     fetchDashboardOverview();
   },[]);
 
+  // add/edit or//delete
+  const handleAddTransaction = async() => {
+    if(!newTransaction.description || !newTransaction.amount) return;
+
+    const payload = {
+      date : toIsoWithClientTime(newTransaction.date),
+      description : newTransaction.description,
+      amount : parseFloat(newTransaction.amount),
+      category : newTransaction.category,
+    };
+
+    try {
+      setLoading(true);
+      if(newTransaction.type === "income"){
+        await axios.post(`${API_BASE}/incomes/add`,payload,{
+          headers : getAuthHeader(),
+        })
+      } else{
+        await axios.post(`${API_BASE}/expense/add`,payload,{
+          headers : getAuthHeader(),
+        });
+      }
+      await refreshTransactions();
+      await fetchDashboardOverview();
+
+      setNewTransaction({
+        date : new Date().toISOString().split("T")[0],
+        description : "",
+        amount : "",
+        type : "expense",
+        category : "Food",
+      });setShowModal(false);
+    } catch (err) {
+      console.error("Failed to add Transactions : ",err?.response || err.message || err);
+    }
+  }
   return <div>Dashboard</div>;
 };
 
