@@ -17,7 +17,8 @@ import {
   getTimeFrameRange,
 } from "../components/Helpers";
 import axios from "axios";
-import { Plus } from "lucide-react";
+import { Plus, Wallet } from "lucide-react";
+import FinancialCard from "../components/FinancialCard";
 
 const API_BASE = "http://localhost:5000/api";
 
@@ -395,6 +396,24 @@ const Dashboard = () => {
             ))}
           </div>
         </div>
+      </div>
+      <div className={dashboardStyles.summaryGrid}>
+        <FinancialCard icon={
+          <div className={dashboardStyles.walletIconContainer}>
+            <Wallet className="w-5 h-5 text-teal-600" />
+          </div>
+        } label="Total Balance" value={`$${Math.round(displayIncome - displayExpenses).toLocaleString()}`}
+        additionalContent={
+          <div className="flex items-center gap-2 mt-2 text-sm">
+            <span className={dashboardStyles.balanceBadge}>
+              +${Math.round(displayIncome).toLocaleString()}
+            </span>
+            <span className={dashboardStyles.expenseBadge}>
+              -${Math.round(displayExpenses).toLocaleString()}
+            </span>
+          </div>
+        }
+        />
       </div>
     </div>
   )
