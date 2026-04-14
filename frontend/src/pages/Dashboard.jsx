@@ -12,10 +12,12 @@ import {
 } from "../assets/color";
 import { useOutletContext } from "react-router-dom";
 import {
+  calculateData,
   getPreviousTimeFrameRange,
   getTimeFrameRange,
 } from "../components/Helpers";
 import axios from "axios";
+import { Plus } from "lucide-react";
 
 const API_BASE = "http://localhost:5000/api";
 
@@ -364,9 +366,38 @@ const Dashboard = () => {
       });setShowModal(false);
     } catch (err) {
       console.error("Failed to add Transactions : ",err?.response || err.message || err);
+    } finally{
+      setLoading(false);
     }
   }
-  return <div>Dashboard</div>;
+  return(
+    <div className={dashboardStyles.container}>
+      {/*Header*/}
+      <div className={dashboardStyles.headerContainer}>
+        <div className={dashboardStyles.headerContainer}>
+          <div>
+            <h1 className={dashboardStyles.headerTitle}> Finance Dashboard</h1>
+            <p className={dashboardStyles.headerSubtitle}>
+              Track your income and expenses
+            </p>
+          </div>
+          <button onClick={() => setShowModal(true)} className={dashboardStyles.addButton}>
+              <Plus size={20} />
+              Add Transactions
+          </button>
+        </div>
+        <div className={dashboardStyles.timeFrameContainer}>
+          <div className={dashboardStyles.timeFrameWrapper}>
+            {["daily","weekly","monthly"].map((frame) => (
+              <button key={frame} onClick={() => setTimeFrame(frame)} className={dashboardStyles.timeFrameButton(timeFrame === frame)}>
+                {frame.charAt(0).toUpperCase()+ frame.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 };
 
 export default Dashboard;
