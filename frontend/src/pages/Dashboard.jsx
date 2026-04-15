@@ -19,6 +19,7 @@ import {
 import axios from "axios";
 import { ArrowDown, BarChart2, PiggyBank, Plus, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import FinancialCard from "../components/FinancialCard";
+import GaugeCard from "../components/GaugeCard"
 
 const API_BASE = "http://localhost:5000/api";
 
@@ -466,7 +467,13 @@ const Dashboard = () => {
 
       </div>
       {/* Gauges */}
-      <div></div>
+      <div className={dashboardStyles.gaugeGrid}>
+        {gaugeData.map((gauge) => (
+          <GaugeCard key={gauge.name} gauge={gauge} colorInfo={GAUGE_COLORS[gauge.name]}
+          timeFrameLabel={timeFrameRange.label} />
+        ))}
+
+      </div>
     </div>
   )
 };
