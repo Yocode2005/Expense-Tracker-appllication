@@ -21,6 +21,7 @@ import { ArrowDown, BarChart2, ChevronDown,TrendingUp as ProfitIcon,PieChart as 
 import FinancialCard from "../components/FinancialCard";
 import GaugeCard from "../components/GaugeCard"
 import { Cell, Legend, Pie, ResponsiveContainer, Tooltip } from "recharts";
+import AddTransactionModal from "../components/Add";
 
 const API_BASE = "http://localhost:5000/api";
 
@@ -664,7 +665,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
+            <AddTransactionModal showModal={showModal} setShowModal={setShowModal} newTransaction={newTransaction} setNewTransaction={setNewTransaction} handleAddTransaction={handleAddTransaction} loading={loading} />
     </div>
   )
 };
