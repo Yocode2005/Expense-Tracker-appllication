@@ -17,7 +17,7 @@ import {
   getTimeFrameRange,
 } from "../components/Helpers";
 import axios from "axios";
-import { ArrowDown, PiggyBank, Plus, TrendingDown, TrendingUp, Wallet } from "lucide-react";
+import { ArrowDown, BarChart2, PiggyBank, Plus, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import FinancialCard from "../components/FinancialCard";
 
 const API_BASE = "http://localhost:5000/api";
@@ -445,14 +445,28 @@ const Dashboard = () => {
         } label={`${timeFrameRange.label} Savings`} value={`$${Math.round(displaySavings).toLocaleString()}`}
         additionalContent={
           <div className=" mt-2 text-xs text-cyan-600 flex items-center gap-2">
-            <div>
-              
+            <div className="flex items-center gap-1">
+              <BarChart2 className="w-4 h-4" />
+                <span>
+                  {
+                    displayIncome >0 ? Math.round((displaySavings/displayIncome) * 100) : 0
+                  } % of income
+                </span>
             </div>
+            {typeof overviewMeta.savingsRate === "number" && (
+              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                overviewMeta.savingsRate < 0 ? trendStyles.negativeRate : trendStyles.positiveRate
+              }`}>
+                {overviewMeta.savingsRate}
+              </span>
+            )}
           </div>
         }
         />
 
       </div>
+      {/* Gauges */}
+      <div></div>
     </div>
   )
 };
