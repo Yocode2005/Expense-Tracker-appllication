@@ -17,7 +17,7 @@ import {
   getTimeFrameRange,
 } from "../components/Helpers";
 import axios from "axios";
-import { Plus, Wallet } from "lucide-react";
+import { ArrowDown, PiggyBank, Plus, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import FinancialCard from "../components/FinancialCard";
 
 const API_BASE = "http://localhost:5000/api";
@@ -414,6 +414,44 @@ const Dashboard = () => {
           </div>
         }
         />
+
+         <FinancialCard icon={
+          <div className={dashboardStyles.arrowDownIconContainer}>
+            <ArrowDown className="w-5 h-5 text-orange-600" />
+          </div>
+        } label={`${timeFrameRange.label}   Expenses`} value={`$${Math.round(displayExpenses).toLocaleString()}`}
+        additionalContent={
+         <div className={`mt-2 text-xs flex items-center gap-1 ${
+          expenseChange >= 0 ? trendStyles.positive : trendStyles.negative
+         }`}>
+          {expenseChange >= 0 ? (
+            <TrendingUp className="w-4 h-4" />
+          ) : (
+            <TrendingDown className="w-4 h-4" />
+          )}
+          <span >
+            {Math.abs(expenseChange)}%{" "}
+            {expenseChange >= 0 ? "increase" : "decrease"} from {" "}
+            {prevTimeFrameRange.label}
+          </span>
+         </div>
+        }
+        />
+
+         <FinancialCard icon={
+          <div className={dashboardStyles.piggyBankIconContainer}>
+            <PiggyBank className="w-5 h-5 text-cyan-600" />
+          </div>
+        } label={`${timeFrameRange.label} Savings`} value={`$${Math.round(displaySavings).toLocaleString()}`}
+        additionalContent={
+          <div className=" mt-2 text-xs text-cyan-600 flex items-center gap-2">
+            <div>
+              
+            </div>
+          </div>
+        }
+        />
+
       </div>
     </div>
   )
