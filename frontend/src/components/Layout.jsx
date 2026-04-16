@@ -1,5 +1,5 @@
 import { Activity, useEffect, useMemo, useState } from "react";
-import { Activity } from "lucide-react";
+//import { Activity } from "lucide-react";
 import { styles } from "../assets/dummyStyles.js";
 import Navbar from "./Navbar.jsx";
 import Sidebar from "./Sidebar.jsx";
@@ -132,7 +132,7 @@ const Layout = ({ onLogout, user }) => {
       const token = localStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const endpoint =
-        transaction.type === "income" ? "income/add" : "expense/add";
+        transaction.type === "income" ? "incomes/add" : "expense/add";
       await axios.post(`${API_BASE}/${endpoint}`, transaction, { headers });
       await fetchTransactions();
       return true;
