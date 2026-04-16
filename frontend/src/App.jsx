@@ -11,6 +11,7 @@ import Layout from "./components/Layout.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
+import Income from "./pages/Income.jsx";
 
 const API_URL = "http://localhost:5000";
 
@@ -220,6 +221,16 @@ const App = () => {
             deleteTransaction={deleteTransaction}
             refreshTransactions={refreshTransactions}
           />
+
+          <Route path="/incomes" element={
+            <Income
+             transactions={transactions}
+            addTransaction={addTransaction}
+            editTransaction={editTransaction}
+            deleteTransaction={deleteTransaction}
+            refreshTransactions={refreshTransactions} />
+          } />
+
         </Route>
       </Routes>
     </>
