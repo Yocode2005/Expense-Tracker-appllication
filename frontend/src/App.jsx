@@ -26,7 +26,7 @@ const ProtectedRoute = ({ user, children }) => {
   const localToken = localStorage.getItem("token");
   const sessionToken = sessionStorage.getItem("token");
   const hasToken = localToken || sessionToken;
-  console.log(hasToken);
+  // console.log(hasToken);
   if (!user || !hasToken) {
     return <Navigate to="/login" replace />;
   }
