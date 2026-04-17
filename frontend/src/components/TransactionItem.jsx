@@ -55,8 +55,26 @@ const TransactionItem = ({
             <DollarSign className='w-5 h-5' />
           )}
         </div>
-        <div>
-          
+        <div className={transactionItemStyles.contentContainer}>
+          {isEditing ? (
+            <>
+            <input type='text' value={editForm.description} onChange={(e) => setEditForm((prev) => ({
+              ...prev,
+              description : e.target.value
+            }))} className={transactionItemStyles.input(
+              !!errors.description,
+              classes
+            )} />
+            {errors.description && (
+              <p className={transactionItemStyles.errorText} id={`desc-error-${transaction.id}`}>
+                {errors.description}
+              </p>
+            )}
+            </>
+          ) : (
+            <p className=''></p>
+          )}
+
         </div>
       </div>
     </div>
