@@ -27,7 +27,7 @@ const API_BASE = "http://localhost:5000/api";
 
 const getAuthHeader = () => {
   const token =
-    localStorage.getItem("token") || localStorage.getItem("authToken");
+    localStorage.getItem("token") || localStorage.getItem("accessToken");
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 // to convert the date to ISO timeline
