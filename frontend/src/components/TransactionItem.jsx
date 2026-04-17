@@ -72,7 +72,9 @@ const TransactionItem = ({
             )}
             </>
           ) : (
-            <p className=''></p>
+            <p className={transactionItemStyles.description}>
+              {transaction.description}
+            </p>
           )}
 
         </div>
