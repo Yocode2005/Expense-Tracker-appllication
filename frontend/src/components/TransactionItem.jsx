@@ -76,9 +76,13 @@ const TransactionItem = ({
               {transaction.description}
             </p>
           )}
-
+          <p className={transactionItemStyles.details}>
+            {new Date(transaction.date).toLocaleDateString()} {" "}
+            {transaction.category}
+          </p>
         </div>
       </div>
+      
     </div>
   )
 }
