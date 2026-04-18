@@ -1,5 +1,5 @@
 import { Activity, useEffect, useMemo, useState } from "react"; // import hooks from react
-//import { Activity } from "lucide-react";
+//import { Activity } from "lucide-react"; // comment it
 import { styles } from "../assets/dummyStyles.js";
 import Navbar from "./Navbar.jsx";
 import Sidebar from "./Sidebar.jsx";
