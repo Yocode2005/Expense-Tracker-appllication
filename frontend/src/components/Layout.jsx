@@ -2,7 +2,7 @@ import { Activity, useEffect, useMemo, useState } from "react"; // import hooks 
 //import { Activity } from "lucide-react"; // comment it
 import { styles } from "../assets/dummyStyles.js"; // import styles 
 import Navbar from "./Navbar.jsx"; // import navbar
-import Sidebar from "./Sidebar.jsx";
+import Sidebar from "./Sidebar.jsx"; // import sidebar
 import {
   ArrowDown,
   ArrowUp,
