@@ -203,7 +203,7 @@ const Income = () => {
     date: new Date().toISOString().split("T")[0],
   });
 
-  // to get the token from localstorage for user verufaction
+  // to get the token from localstorage for user verification
   const getAuthHeaders = useCallback(() => {
     const token = localStorage.getItem("token");
     return token ? { Authorization: `Bearer ${token}` } : {};
