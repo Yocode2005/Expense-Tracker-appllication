@@ -237,7 +237,7 @@ const Income = () => {
         .filter((t) => t.type === "income")
         .sort((a, b) => new Date(b.date) - new Date(a.date)),
     [outletTransactions],
-  ); // filter transactions comming from outside
+  ); // filter transactions comming from outletcontext
 
   const timeFrameTransactions = useMemo(
     () =>
@@ -245,7 +245,7 @@ const Income = () => {
         isDateInRange(t.date, timeFrameRange.start, timeFrameRange.end),
       ),
     [incomeTransactions, timeFrameRange, isDateInRange],
-  );
+  ); // filter by time frame
 
   const filteredTransactions = useMemo(() => {
     if (filter === "all") return timeFrameTransactions;
