@@ -167,7 +167,7 @@ const FilterSection = ({ filter, setFilter, handleExport }) => (
       <Download size={16} className="md:size-4" /> Export
     </button>
   </div>
-);
+); // added fro filtering the data
 
 const Income = () => {
   const {
