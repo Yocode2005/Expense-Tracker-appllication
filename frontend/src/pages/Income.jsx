@@ -218,6 +218,7 @@ const Income = () => {
     [timeFrame, timeFrameRange],
   );
 
+  // function to check if a date is within a range or not
   const isDateInRange = useCallback((date, start, end) => {
     const transactionDate = new Date(date);
     const startDate = new Date(start);
