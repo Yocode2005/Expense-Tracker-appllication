@@ -237,7 +237,7 @@ const Income = () => {
         .filter((t) => t.type === "income")
         .sort((a, b) => new Date(b.date) - new Date(a.date)),
     [outletTransactions],
-  );
+  ); // filter transactions comming from outside
 
   const timeFrameTransactions = useMemo(
     () =>
