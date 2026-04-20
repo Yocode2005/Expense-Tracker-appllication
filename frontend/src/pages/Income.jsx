@@ -287,6 +287,8 @@ const Income = () => {
     return data;
   }, [filteredTransactions, chartPoints, timeFrame]);
 
+
+  // fetch the overview from the server side
   const fetchOverview = useCallback(
     async (range = timeFrame ?? "monthly") => {
       try {
