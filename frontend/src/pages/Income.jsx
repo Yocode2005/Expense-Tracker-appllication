@@ -292,7 +292,7 @@ const Income = () => {
   const fetchOverview = useCallback(
     async (range = timeFrame ?? "monthly") => {
       try {
-        const res = await axios.get(`${API_BASE}/income/overview`, {
+        const res = await axios.get(`${API_BASE}/incomes/overview`, {
           headers: getAuthHeaders(),
           params: { range },
         });
