@@ -428,6 +428,7 @@ const Income = () => {
     timeFrame,
   ]);
 
+  // to delete income transaction
   const handleDeleteTransaction = useCallback(
     async (id) => {
       if (!id) return;
