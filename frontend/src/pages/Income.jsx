@@ -348,6 +348,7 @@ const Income = () => {
     [overview.numberOfTransactions, filteredTransactions],
   );
 
+  // to add income transaction
   const handleAddTransaction = useCallback(async () => {
     if (!newTransaction.description || !newTransaction.amount) return;
 
