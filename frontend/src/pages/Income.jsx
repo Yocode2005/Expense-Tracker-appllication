@@ -362,7 +362,7 @@ const Income = () => {
         date: toIsoWithClientTime(newTransaction.date),
       };
 
-      await axios.post(`${API_BASE}/income/add`, payload, {
+      await axios.post(`${API_BASE}/incomes/add`, payload, {
         headers: { "Content-Type": "application/json", ...getAuthHeaders() },
       });
       await refreshTransactions();
