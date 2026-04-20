@@ -404,7 +404,7 @@ const Income = () => {
         date: toIsoWithClientTime(editForm.date),
       };
 
-      await axios.put(`${API_BASE}/income/update/${editingId}`, payload, {
+      await axios.put(`${API_BASE}/incomes/update/${editingId}`, payload, {
         headers: { "Content-Type": "application/json", ...getAuthHeaders() },
       });
 
