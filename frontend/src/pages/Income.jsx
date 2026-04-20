@@ -437,7 +437,7 @@ const Income = () => {
 
       try {
         setLoading(true);
-        await axios.delete(`${API_BASE}/income/delete/${id}`, {
+        await axios.delete(`${API_BASE}/incomes/delete/${id}`, {
           headers: getAuthHeaders(),
         });
 
