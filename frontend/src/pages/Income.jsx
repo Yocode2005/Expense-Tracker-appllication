@@ -341,7 +341,7 @@ const Income = () => {
             )
           : 0,
     [overview.averageIncome, filteredTransactions],
-  );
+  ); // use backend overview if available, otherwise calculate from filtered transactions
 
   const transactionsCount = useMemo(
     () => overview.numberOfTransactions ?? filteredTransactions.length,
