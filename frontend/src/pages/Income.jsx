@@ -267,6 +267,7 @@ const Income = () => {
     });
   }, [timeFrameTransactions, filter, timeFrameRange]);
 
+  // additional filters
   const chartData = useMemo(() => {
     const data = chartPoints.map((point) => ({ ...point, income: 0 }));
 
