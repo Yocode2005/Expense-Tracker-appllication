@@ -498,6 +498,7 @@ const Income = () => {
     }
   }, [getAuthHeaders, filteredTransactions]);
 
+  // ui part
   return (
     <div className={styles.wrapper}>
       <div className={styles.headerContainer}>
