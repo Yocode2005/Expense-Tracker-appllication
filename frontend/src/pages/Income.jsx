@@ -20,7 +20,7 @@ import {
   ResponsiveContainer,
   Cell,
   ReferenceLine,
-} from "recharts";
+} from "recharts"; // for charts
 import axios from "axios";
 import { exportToExcel } from "../utils/exportUtils";
 import AddTransactionModal from "../components/Add";
