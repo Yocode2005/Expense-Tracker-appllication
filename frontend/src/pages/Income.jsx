@@ -457,7 +457,7 @@ const Income = () => {
   // to  download the excel sheet of the transactions
   const handleExport = useCallback(async () => {
     try {
-      const res = await axios.get(`${API_BASE}/income/downloadexcel`, {
+      const res = await axios.get(`${API_BASE}/incomes/downloadexcel`, {
         headers: getAuthHeaders(),
         responseType: "blob",
       });
