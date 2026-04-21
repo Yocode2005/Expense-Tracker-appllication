@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react"; // for state management and side effects
 import { useOutletContext } from "react-router-dom";
 import {
   Plus,
