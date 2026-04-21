@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from "react"; // for state management and side effects
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom"; // to get the context from the parent route
 import {
   Plus,
   DollarSign,
