@@ -9,7 +9,7 @@ import {
   TrendingUp,
   Filter,
   BarChart2,
-} from "lucide-react";
+} from "lucide-react"; // for icons
 import {
   BarChart,
   Bar,
