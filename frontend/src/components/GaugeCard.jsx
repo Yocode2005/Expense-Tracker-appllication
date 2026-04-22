@@ -6,7 +6,7 @@ import {
   PolarAngleAxis
 } from "recharts";
 
-const GaugeCard = ({
+const GaugeCard = ({ // functional component to display a gauge chart with optional negative value handling
   gauge = {},
   colorInfo = {},
   timeFrameLabel = "",
