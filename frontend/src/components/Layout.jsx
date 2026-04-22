@@ -28,7 +28,7 @@ import { Outlet } from "react-router-dom";
 // import { get } from 'mongoose';
 
 const API_BASE = import.meta.env.VITE_BASE_URL || "http://localhost:5000/api";
-const CATEGORY_ICONS = {
+const CATEGORY_ICONS = { // mapping of category names to icons
   Food: <Utensils className="w-4 h-4" />,
   Housing: <Home className="w-4 h-4" />,
   Transport: <Car className="w-4 h-4" />,
