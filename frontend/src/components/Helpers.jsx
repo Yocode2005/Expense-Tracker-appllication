@@ -1,4 +1,4 @@
-export const getTimeFrameRange = (timeFrame) => {
+export const getTimeFrameRange = (timeFrame) => { // returns start and end date for the given time frame
   const now = new Date();
   const start = new Date(now);
   start.setHours(0, 0, 0, 0);
