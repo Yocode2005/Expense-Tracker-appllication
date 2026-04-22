@@ -42,7 +42,7 @@ const CATEGORY_ICONS = {
 };
 
 // to filter
-const filterTransactions = (transactions, frame) => {
+const filterTransactions = (transactions, frame) => { // filters transactions based on the selected time frame (daily, weekly, monthly)
   const now = new Date();
   const today = new Date(now).setHours(0, 0, 0, 0);
 
