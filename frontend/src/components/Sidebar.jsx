@@ -220,5 +220,4 @@ const renderMenuItem = ({ text, path, icon }) => {
     </>
   )
 }
-
 export default Sidebar
