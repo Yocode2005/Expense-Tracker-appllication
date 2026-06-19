@@ -12,7 +12,4 @@ const FinancialCard = ({icons, label, value, additionalContent, borderColor = ""
         {additionalContent}
     </div>
 )
- 
-
-
 export default FinancialCard
