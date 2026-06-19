@@ -1,6 +1,6 @@
 import { Activity, useEffect, useMemo, useState } from "react"; // import hooks from react
 //import { Activity } from "lucide-react"; // comment it
-import { styles } from "../assets/dummyStyles.js"; // import styles 
+import { styles } from "../assets/dummyStyles.js"; // import styles
 import Navbar from "./Navbar.jsx"; // import navbar
 import Sidebar from "./Sidebar.jsx"; // import sidebar
 import {
@@ -28,7 +28,8 @@ import { Outlet } from "react-router-dom";
 // import { get } from 'mongoose';
 
 const API_BASE = import.meta.env.VITE_BASE_URL || "http://localhost:5000/api";
-const CATEGORY_ICONS = { // mapping of category names to icons
+const CATEGORY_ICONS = {
+  // mapping of category names to icons
   Food: <Utensils className="w-4 h-4" />,
   Housing: <Home className="w-4 h-4" />,
   Transport: <Car className="w-4 h-4" />,
@@ -42,7 +43,8 @@ const CATEGORY_ICONS = { // mapping of category names to icons
 };
 
 // to filter
-const filterTransactions = (transactions, frame) => { // filters transactions based on the selected time frame (daily, weekly, monthly)
+const filterTransactions = (transactions, frame) => {
+  // filters transactions based on the selected time frame (daily, weekly, monthly)
   const now = new Date();
   const today = new Date(now).setHours(0, 0, 0, 0);
 
@@ -485,17 +487,21 @@ const Layout = ({ onLogout, user }) => {
                   </div>
                 ) : (
                   <div className={styles.transactions.viewAllContainer}>
-                    <button onClick={() => setShowAllTransactions(!showAllTransactions)}
-                      className={styles.transactions.viewAllButton}>
+                    <button
+                      onClick={() =>
+                        setShowAllTransactions(!showAllTransactions)
+                      }
+                      className={styles.transactions.viewAllButton}
+                    >
                       {showAllTransactions ? (
                         <>
-                        <ChevronUp className="w-5 h-5" />
-                        show less
+                          <ChevronUp className="w-5 h-5" />
+                          show less
                         </>
                       ) : (
                         <>
-                       <ChevronDown className="w-5 h-5" />
-                        View All Transactions ({transactions.length}) 
+                          <ChevronDown className="w-5 h-5" />
+                          View All Transactions ({transactions.length})
                         </>
                       )}
                     </button>
@@ -510,38 +516,46 @@ const Layout = ({ onLogout, user }) => {
                 Spending by Category
               </h3>
               <div className={styles.categories.list}>
-                {topCategories.map(([category,amount]) =>(
-                 <div key={category} className={styles.categories.categoryItem}>
-                  <div className="flex items-center gap-3">
-                    <div className={styles.categories.categoryIconContainer}>
-                      {CATEGORY_ICONS[category] || (
-                        <DollarSign className={styles.categories.categoryIcon}/>
-                      )}
+                {topCategories.map(([category, amount]) => (
+                  <div
+                    key={category}
+                    className={styles.categories.categoryItem}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={styles.categories.categoryIconContainer}>
+                        {CATEGORY_ICONS[category] || (
+                          <DollarSign
+                            className={styles.categories.categoryIcon}
+                          />
+                        )}
+                      </div>
+                      <span className={styles.categories.categoryName}>
+                        {category}
+                      </span>
                     </div>
-                    <span className={styles.categories.categoryName}>
-                      {category}
+                    <span className={styles.categories.categoryAmount}>
+                      ${amount}
                     </span>
                   </div>
-                  <span className={styles.categories.categoryAmount}>
-                    ${amount}
-                  </span>
-                 </div> 
                 ))}
               </div>
               <div className={styles.categories.summaryContainer}>
                 <div className={styles.categories.summaryGrid}>
                   <div className={styles.categories.summaryIncomeCard}>
-                    <p className={styles.categories.summaryTitle}>Total Income</p>
+                    <p className={styles.categories.summaryTitle}>
+                      Total Income
+                    </p>
                     <p className={styles.categories.summaryValue}>
                       ${stats.allTimeIncome.toLocaleString()}
                     </p>
                   </div>
-                  
+
                   <div className={styles.categories.summaryExpenseCard}>
-                    <p className={styles.categories.summaryTitle}>Total Expenses</p>
+                    <p className={styles.categories.summaryTitle}>
+                      Total Expenses
+                    </p>
                     <p className={styles.categories.summaryValue}>
-                      ${stats.allTimeExpenses.toLocaleString()} 
-                      
+                      ${stats.allTimeExpenses.toLocaleString()}
                     </p>
                   </div>
                 </div>
