@@ -108,7 +108,7 @@ const AddTransactionModal = ({
                     type="button"
                     className={modalStyles.typeButton(
                       newTransaction.type === "income",
-                      modalStyles.colorClasses.teal.typeButtonSelected
+                      modalStyles.colorClasses.teal.typeButtonSelected,
                     )}
                     onClick={() =>
                       setNewTransaction((prev) => ({
@@ -124,7 +124,7 @@ const AddTransactionModal = ({
                     type="button"
                     className={modalStyles.typeButton(
                       newTransaction.type === "expense",
-                      modalStyles.colorClasses.orange.typeButtonSelected
+                      modalStyles.colorClasses.orange.typeButtonSelected,
                     )}
                     onClick={() =>
                       setNewTransaction((prev) => ({
