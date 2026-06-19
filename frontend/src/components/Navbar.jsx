@@ -12,12 +12,13 @@ function Navbar({ user: propUser, onLogout }) {
   const navigate = useNavigate();
   const menuRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [localUser,setLocalUser] = useState(null);
+  const [localUser, setLocalUser] = useState(null);
 
-  const user = propUser || localUser || {
-    name: "",
-    email: "",
-  };
+  const user = propUser ||
+    localUser || {
+      name: "",
+      email: "",
+    };
 
   // to fetch the user data from the server
   useEffect(() => {
@@ -57,13 +58,13 @@ function Navbar({ user: propUser, onLogout }) {
   };
 
   // closes the toggle menu when clicked outside the box
-   useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setMenuOpen(false);
       }
     };
-    
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
