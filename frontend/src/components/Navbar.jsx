@@ -146,5 +146,4 @@ function Navbar({ user: propUser, onLogout }) {
     </header>
   );
 }
-
 export default Navbar;
