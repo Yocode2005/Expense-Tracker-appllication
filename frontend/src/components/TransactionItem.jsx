@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { transactionItemStyles } from '../assets/dummyStyles';
-import { colorClasses } from '../assets/color';
-import { DollarSign, Edit, Save, Trash2, X } from 'lucide-react';
+import React, { useState } from "react";
+import { transactionItemStyles } from "../assets/dummyStyles";
+import { colorClasses } from "../assets/color";
+import { DollarSign, Edit, Save, Trash2, X } from "lucide-react";
 const TransactionItem = ({
   transaction,
   isEditing,
@@ -25,7 +25,10 @@ const TransactionItem = ({
     const nextErrors = { description: "", amount: "" };
     const desc = String(editForm.description ?? "").trim();
     const amtRaw = editForm.amount;
-    const amt = amtRaw === "" || amtRaw === null || amtRaw === undefined ? "" : String(amtRaw).trim();
+    const amt =
+      amtRaw === "" || amtRaw === null || amtRaw === undefined
+        ? ""
+        : String(amtRaw).trim();
 
     if (!desc) {
       nextErrors.description = "Description is required.";
@@ -33,7 +36,7 @@ const TransactionItem = ({
 
     if (amt === "") {
       nextErrors.amount = "Amount is required.";
-    }  else if (Number(amt) <= 0) {
+    } else if (Number(amt) <= 0) {
       nextErrors.amount = "Amount must be greater than 0.";
     }
 
@@ -48,28 +51,40 @@ const TransactionItem = ({
     }
   }; // to save the desc and amt
   return (
-    <div className={transactionItemStyles.container(isEditing,classes)}>
+    <div className={transactionItemStyles.container(isEditing, classes)}>
       <div className={transactionItemStyles.mainContainer}>
-        <div className={transactionItemStyles.iconContainer(iconClass,classes)}>
+        <div
+          className={transactionItemStyles.iconContainer(iconClass, classes)}
+        >
           {categoryIcons[transaction.category] || (
-            <DollarSign className='w-5 h-5' />
+            <DollarSign className="w-5 h-5" />
           )}
         </div>
         <div className={transactionItemStyles.contentContainer}>
           {isEditing ? (
             <>
-            <input type='text' value={editForm.description} onChange={(e) => setEditForm((prev) => ({
-              ...prev,
-              description : e.target.value
-            }))} className={transactionItemStyles.input(
-              !!errors.description,
-              classes
-            )} />
-            {errors.description && (
-              <p className={transactionItemStyles.errorText} id={`desc-error-${transaction.id}`}>
-                {errors.description}
-              </p>
-            )}
+              <input
+                type="text"
+                value={editForm.description}
+                onChange={(e) =>
+                  setEditForm((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+                className={transactionItemStyles.input(
+                  !!errors.description,
+                  classes,
+                )}
+              />
+              {errors.description && (
+                <p
+                  className={transactionItemStyles.errorText}
+                  id={`desc-error-${transaction.id}`}
+                >
+                  {errors.description}
+                </p>
+              )}
             </>
           ) : (
             <p className={transactionItemStyles.description}>
@@ -77,12 +92,12 @@ const TransactionItem = ({
             </p>
           )}
           <p className={transactionItemStyles.details}>
-            {new Date(transaction.date).toLocaleDateString()} {" "}
+            {new Date(transaction.date).toLocaleDateString()}{" "}
             {transaction.category}
           </p>
         </div>
       </div>
-       <div className={transactionItemStyles.actionsContainer}>
+      <div className={transactionItemStyles.actionsContainer}>
         <div className={transactionItemStyles.amountContainer}>
           {isEditing ? (
             <>
@@ -173,6 +188,6 @@ const TransactionItem = ({
         </div>
       </div>
     </div>
-  )
-}
-export default TransactionItem
+  );
+};
+export default TransactionItem;
