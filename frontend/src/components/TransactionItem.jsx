@@ -175,5 +175,4 @@ const TransactionItem = ({
     </div>
   )
 }
-
 export default TransactionItem
