@@ -36,5 +36,4 @@ const TimeFrameSelector = ({
     </div>
   );
 };
-
 export default TimeFrameSelector;
