@@ -244,5 +244,4 @@ const Signup = ({ API_URL = "http://localhost:5000", onSignup }) => {
     </div>
   );
 };
-
 export default Signup;
