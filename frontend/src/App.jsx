@@ -203,12 +203,15 @@ const App = () => {
         <Route
           element={
             <ProtectedRoute user={user}>
-              <Layout user={user} onLogout={handleLogout}
-              transactions={transactions}
-            addTransaction={addTransaction}
-            editTransaction={editTransaction}
-            deleteTransaction={deleteTransaction}
-            refreshTransactions={refreshTransactions} />
+              <Layout
+                user={user}
+                onLogout={handleLogout}
+                transactions={transactions}
+                addTransaction={addTransaction}
+                editTransaction={editTransaction}
+                deleteTransaction={deleteTransaction}
+                refreshTransactions={refreshTransactions}
+              />
             </ProtectedRoute>
           }
         >
@@ -222,15 +225,18 @@ const App = () => {
             refreshTransactions={refreshTransactions}
           />
 
-          <Route path="/incomes" element={
-            <Income
-             transactions={transactions}
-            addTransaction={addTransaction}
-            editTransaction={editTransaction}
-            deleteTransaction={deleteTransaction}
-            refreshTransactions={refreshTransactions} />
-          } />
-
+          <Route
+            path="/incomes"
+            element={
+              <Income
+                transactions={transactions}
+                addTransaction={addTransaction}
+                editTransaction={editTransaction}
+                deleteTransaction={deleteTransaction}
+                refreshTransactions={refreshTransactions}
+              />
+            }
+          />
         </Route>
       </Routes>
     </>
