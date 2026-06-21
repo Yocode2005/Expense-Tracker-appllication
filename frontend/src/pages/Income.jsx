@@ -141,7 +141,6 @@ const IncomeChart = ({ chartData, timeFrame, timeFrameRange }) => (
   </div>
 ); // for income chart
 
-
 // small components
 const FilterSection = ({ filter, setFilter, handleExport }) => (
   <div className={styles.filterContainer}>
@@ -286,7 +285,6 @@ const Income = () => {
 
     return data;
   }, [filteredTransactions, chartPoints, timeFrame]);
-
 
   // fetch the overview from the server side
   const fetchOverview = useCallback(
