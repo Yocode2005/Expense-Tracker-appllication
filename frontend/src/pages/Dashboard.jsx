@@ -66,7 +66,7 @@ function toIsoWithClientTime(dateValue) {
 }
 
 const Dashboard = () => {
-  // to get refreshTransactions from the outlet context
+  // to get refreshTransactions from the outlet context 
   const {
     transactions: outletTransactions = [],
     timeFrame = "monthly",
