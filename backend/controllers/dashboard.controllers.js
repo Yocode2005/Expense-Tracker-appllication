@@ -36,14 +36,14 @@ const getDashboardOverview = asyncHandler(async(req, res) => {
       amount,
       percent: monthlyExpense === 0 ? 0 : Math.round((amount / monthlyExpense) * 100),
     }));
-    return res.status(200).json(new ApiResponse(true, "Dashboard overview fetched successfully", {
+   return res.status(200).json(new ApiResponse(200, {
       monthlyIncome,
       monthlyExpense,
       savings,
       savingsRate,
       recentTransactions,
       expenseDistribution
-    }));
+    }, "Dashboard overview fetched successfully"));
 
 
   } catch (error) {
