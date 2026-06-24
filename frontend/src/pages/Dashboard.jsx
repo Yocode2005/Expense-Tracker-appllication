@@ -31,18 +31,17 @@ import {
   TrendingDown,
   TrendingUp,
   Wallet,
-  PieChart,
 } from "lucide-react";
 import FinancialCard from "../components/FinancialCard";
 import GaugeCard from "../components/GaugeCard";
-import { Cell, Legend, Pie, ResponsiveContainer, Tooltip } from "recharts";
+import { Cell, Legend, Pie, ResponsiveContainer, Tooltip,PieChart } from "recharts";
 import AddTransactionModal from "../components/Add";
 
 const API_BASE = "http://localhost:5000/api";
 
 const getAuthHeader = () => {
   const token =
-    localStorage.getItem("token") || localStorage.getItem("accessToken");
+    localStorage.getItem("token") || sessionStorage.getItem("token") || localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 // to convert the date to ISO timeline
