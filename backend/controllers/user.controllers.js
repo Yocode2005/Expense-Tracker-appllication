@@ -85,9 +85,7 @@ const loginUser = asyncHandler(async(req,res) => {
             message : "All fields are required"
         })
     }
-    const user = await User.findOne({
-      $or : [{email},{password}]
-    })
+    const user = await User.findOne({ email })
     if(!user){
         return res.status(400).json({
             success : false,
