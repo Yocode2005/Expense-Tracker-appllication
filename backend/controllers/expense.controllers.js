@@ -25,7 +25,7 @@ const addExpense = asyncHandler(async(req,res) => {
             throw new ApiError(500, "Failed to add expense")
         }
         await newExpense.save(); // save the new expense to the database
-        res.status(201).json(new ApiResponse(true, "Expense added successfully", newExpense))
+        res.status(201).json(new ApiResponse(201, newExpense, "Expense added successfully"))
     } catch (error) {
         throw new ApiError(400, "Error while adding expense");
     }
@@ -36,7 +36,7 @@ const getAllExpenses = asyncHandler(async(req,res) => {
     const userId = req.user._id;
     try {
         const expenses = await Expense.find({userId}).sort({createdAt : -1});
-        res.status(200).json(new ApiResponse(true, "Expenses fetched successfully", expenses))
+        res.status(200).json(new ApiResponse(200, expenses, "Expenses fetched successfully"))
     } catch (error) {
         throw new ApiError(500, "Error while fetching expenses")
     }
@@ -59,7 +59,7 @@ const updateExpense = asyncHandler(async(req,res) => {
                 throw new ApiError(404, "Expense not found")
             }
             await expense.save();
-            res.status(200).json(new ApiResponse(true, "Expense updated successfully", expense))
+            res.status(200).json(new ApiResponse(200, expense, "Expense updated successfully"))
         } catch (error) {
             throw new ApiError(500, "Error while updating expense")
         }
@@ -74,7 +74,7 @@ const deleteExpense = asyncHandler(async(req,res) => {
         if(!expense){
             throw new ApiError(404, "Expense not found")
         }
-        res.status(200).json(new ApiResponse(true, "Expense deleted successfully", expense))
+        res.status(200).json(new ApiResponse(200, expense, "Expense deleted successfully"))
     } catch (error) {
         throw new ApiError(500, "Error while deleting expense")
     }
@@ -119,12 +119,12 @@ const getExpenseOverview = asyncHandler(async(req, res) => {
 
         const recentTransactions = expenses.slice(0, 5); // get 5 most recent transactions
 
-        res.status(200).json(new ApiResponse(true, "Expense overview fetched successfully", {
+        res.status(200).json(new ApiResponse(200, {
             totalExpenses,
             averageExpense,
             numberOfTransactions,
             recentTransactions
-        }))
+        }, "Expense overview fetched successfully"))
     } catch (error) {
         throw new ApiError(500, "Error while fetching expense overview")
     }
