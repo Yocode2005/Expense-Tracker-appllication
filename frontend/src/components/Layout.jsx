@@ -88,7 +88,7 @@ const Layout = ({ onLogout, user }) => {
   const fetchTransactions = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       const [incomeRes, expenseRes] = await Promise.all([
@@ -131,7 +131,7 @@ const Layout = ({ onLogout, user }) => {
   // to add the transition either income or expense
   const addTransaction = async (transaction) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const endpoint =
         transaction.type === "income" ? "incomes/add" : "expense/add";
@@ -149,7 +149,7 @@ const Layout = ({ onLogout, user }) => {
   // to update any transaction
   const editTransaction = async (id, transaction) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const endpoint =
         transaction.type === "income" ? "income/update" : "expense/update";
@@ -169,7 +169,7 @@ const Layout = ({ onLogout, user }) => {
   // to delete any transaction
   const deleteTransaction = async (id, type) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const endpoint = type === "income" ? "income/delete" : "expense/delete";
       await axios.delete(`${API_BASE}/${endpoint}/${id}`, { headers });
@@ -465,7 +465,7 @@ const Layout = ({ onLogout, user }) => {
                             {description}
                           </p>
                           <p className={styles.transactions.meta}>
-                            {new Date(date).toLocaleDateString()}
+                            {new Date(data).toLocaleDateString()}
                             <span className="ml-2 capitalize">{category}</span>
                           </p>
                         </div>
