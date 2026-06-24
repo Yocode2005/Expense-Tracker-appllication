@@ -28,7 +28,7 @@ try {
         throw new ApiError(500, "Failed to add income")
     }
     await newIncome.save(); // save the new income to the database
-    res.status(201).json(new ApiResponse(true, "Income added successfully", newIncome))
+    res.status(201).json(new ApiResponse(201, newIncome, "Income added successfully"))
 
    
 
@@ -45,7 +45,7 @@ const getAllIncomes = asyncHandler(async(req, res) => {
     const userId = req.user._id;
     try {
         const incomes = await Income.find({userId}).sort({createdAt : -1});
-        res.status(200).json(new ApiResponse(true, "Incomes fetched successfully", incomes))
+        res.status(200).json(new ApiResponse(200, incomes, "Incomes fetched successfully"))
     } catch (error) {
         throw new ApiError(500, "Error while fetching incomes")
     }
@@ -71,7 +71,7 @@ const updateIncome = asyncHandler(async(req, res) => {
             throw new ApiError(404, "Income not found")
         }
         await income.save();
-        res.status(200).json(new ApiResponse(true, "Income updated successfully", income))
+        res.status(200).json(new ApiResponse(200, income, "Income updated successfully"))
     } catch (error) {
         throw new ApiError(500, "Error while updating income")
     }
@@ -90,7 +90,7 @@ const deleteIncome = asyncHandler(async(req, res) => {
         if(!income){
             throw new ApiError(404, "Income not found")
         }   
-        res.status(200).json(new ApiResponse(true, "Income deleted successfully", income))
+        res.status(200).json(new ApiResponse(200, income, "Income deleted successfully"))
     } catch (error) {
         throw new ApiError(500, "Error while deleting income")
     }
@@ -138,12 +138,12 @@ const getIncomeOverview = asyncHandler(async(req, res) => {
 
         const recentTransactions = incomes.slice(0, 5); // get 5 most recent transactions
 
-        res.status(200).json(new ApiResponse(true, "Income overview fetched successfully", {
+        res.status(200).json(new ApiResponse(200, {
             totalIncome,
             averageIncome,
             nuberOfTransactions,
             recentTransactions
-        }))
+        }, "Income overview fetched successfully"))
     } catch (error) {
         throw new ApiError(500, "Error while fetching income overview")
     }
