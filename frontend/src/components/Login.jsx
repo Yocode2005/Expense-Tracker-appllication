@@ -186,7 +186,6 @@ const Login = ({ onLogin, API_URL = "http://localhost:5000" }) => {
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
                 className={loginStyles.checkbox}
-                required
               />
               <label htmlFor="remember" className={loginStyles.checkboxLabel}>
                 Remember Me
