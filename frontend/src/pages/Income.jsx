@@ -401,7 +401,6 @@ const Income = () => {
       await axios.put(`${API_BASE}/incomes/update/${editingId}`, payload, {
         headers: { "Content-Type": "application/json", ...getAuthHeaders() },
       });
-
       await refreshTransactions();
       await fetchOverview(timeFrame ?? "monthly");
 
