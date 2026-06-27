@@ -392,7 +392,6 @@ const Income = () => {
 
     try {
       setLoading(true);
-
       const payload = {
         description: editForm.description.trim(),
         amount: parseFloat(editForm.amount),
