@@ -359,7 +359,6 @@ const Income = () => {
         category: newTransaction.category,
         date: toIsoWithClientTime(newTransaction.date),
       };
-
       await axios.post(`${API_BASE}/incomes/add`, payload, {
         headers: { "Content-Type": "application/json", ...getAuthHeaders() },
       });
