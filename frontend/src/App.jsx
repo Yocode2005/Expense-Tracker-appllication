@@ -226,7 +226,7 @@ const App = () => {
           />
 
           <Route
-            path="/incomes"
+            path="/income"
             element={
               <Income
                 transactions={transactions}
