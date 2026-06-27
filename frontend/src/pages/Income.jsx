@@ -364,7 +364,6 @@ const Income = () => {
       });
       await refreshTransactions();
       await fetchOverview(timeFrame ?? "monthly");
-
       setNewTransaction({
         date: new Date().toISOString().split("T")[0],
         description: "",
