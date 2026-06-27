@@ -420,7 +420,6 @@ const Income = () => {
     fetchOverview,
     timeFrame,
   ]);
-
   // to delete income transaction
   const handleDeleteTransaction = useCallback(
     async (id) => {
