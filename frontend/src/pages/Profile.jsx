@@ -97,7 +97,7 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
     }
   },[getAuthToken,navigate],)
 
-  //
+  // to fetch current user
   return (
     <div>Profile</div>
   )
