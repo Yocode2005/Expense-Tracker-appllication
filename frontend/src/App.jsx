@@ -13,6 +13,7 @@ import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import Income from "./pages/Income.jsx";
 import Expense from "./pages/Expense.jsx";
+import Profile from "./pages/Profile.jsx";
 
 const API_URL = "http://localhost:5000";
 
@@ -250,6 +251,8 @@ const App = () => {
               />
             }
           />
+          <Route path="/profile" element={<Profile
+          user={user} onUpdateProfile={updateUserData} onLogout={handleLogout} />}/>
         </Route>
       </Routes>
     </>
