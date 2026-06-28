@@ -254,6 +254,8 @@ const App = () => {
           <Route path="/profile" element={<Profile
           user={user} onUpdateProfile={updateUserData} onLogout={handleLogout} />}/>
         </Route>
+        <Route path="*" element={<Navigate to={user ? "/" : "/login"} replace />}
+        />
       </Routes>
     </>
   );
