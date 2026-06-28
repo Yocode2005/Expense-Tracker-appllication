@@ -68,7 +68,7 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
 
   const getAuthToken = useCallback(() => localStorage.getItem("token") || sessionStorage.getItem("token"),[]);
 
-  
+  // API request
   return (
     <div>Profile</div>
   )
