@@ -87,9 +87,17 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
         const response = await axios(config);
         return response.data;
     } catch (error) {
-        
+        console.error(`${method} request error : `,error);
+        if(error.response?.status === 401){
+            navigate("/login");
+        }
+        throw error;
+    } finally {
+        setLoading(false);
     }
-  })
+  },[getAuthToken,navigate],)
+
+  //
   return (
     <div>Profile</div>
   )
