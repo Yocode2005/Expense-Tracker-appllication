@@ -621,4 +621,6 @@ const ExpensePage = () => {
   );
 };
 
-export default ExpensePage;
+export default ExpensePage; 
+
+// similae function as income we just replace it
