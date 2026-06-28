@@ -12,6 +12,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import Income from "./pages/Income.jsx";
+import Expense from "./pages/Expense.jsx";
 
 const API_URL = "http://localhost:5000";
 
@@ -229,6 +230,18 @@ const App = () => {
             path="/income"
             element={
               <Income
+                transactions={transactions}
+                addTransaction={addTransaction}
+                editTransaction={editTransaction}
+                deleteTransaction={deleteTransaction}
+                refreshTransactions={refreshTransactions}
+              />
+            }
+          />
+          <Route
+            path="/expense"
+            element={
+              <Expense
                 transactions={transactions}
                 addTransaction={addTransaction}
                 editTransaction={editTransaction}
