@@ -303,7 +303,7 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
           </div>
         </div>
       </div>
-      
+      {/*chnage password */}
     </div>
   )
 }
