@@ -3,6 +3,7 @@ import { profileStyles } from '../assets/dummyStyles'
 import Modal from "react-modal";
 import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import {toast} from "react-toastify";
 
 const BASE_URL = "http://localhost:5000/api";
 Modal.setAppElement('#root');
@@ -133,6 +134,22 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
   }, []);
 
   // to save the profile
+  const handleSaveProfile = async() => {
+    try {
+      const data = await handleApiRequest("put","/user/profile",tempUser);
+      if(data){
+        const updatedUser = data.user || data;
+        setUser(updatedUser);
+        setTempUser(updatedUser);
+        setEditMode(false);
+
+        onUpdateProfile?.(updatedUser);
+        toast.success("Profile updated successfully!");
+      }
+    } catch (error) {
+      toast.error(err.response?.data?.message || "Failed to update profile");
+    }
+  };
   
   return (
     <div>Profile</div>
