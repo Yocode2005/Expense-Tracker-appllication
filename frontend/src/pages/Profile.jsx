@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
 import { profileStyles } from '../assets/dummyStyles'
 import Modal from "react-modal";
-import { Eye, EyeOff, Lock, User } from 'lucide-react';
+import { Eye, EyeOff, Lock, User, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
 import axios from "axios";
@@ -45,7 +45,7 @@ const PasswordInput = memo(({ name, label, value, error, showField, onToggle, on
 
 PasswordInput.displayName = 'PasswordInput';
 
-const Profile = ({user: onUpdateProfile, onLogout}) => {
+const Profile = ({onUpdateProfile, onLogout}) => {
     const navigate = useNavigate();
   const [user, setUser] = useState({ 
     name: '', 
@@ -303,7 +303,85 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
           </div>
         </div>
       </div>
-      {/*chnage password */}
+      
+      {/* Change Password Modal */}
+      <Modal
+        isOpen={showPasswordModal}
+        onRequestClose={closePasswordModal}
+        contentLabel="Change Password"
+        className="modal"
+        overlayClassName="modal-overlay"
+        // Prevent unnecessary re-renders
+        shouldCloseOnOverlayClick={!loading}
+        shouldCloseOnEsc={!loading}
+      >
+        <div className={profileStyles.modalContent}>
+          <div className={profileStyles.modalHeader}>
+            <h3 className={profileStyles.modalTitle}>Change Password</h3>
+            <button 
+              onClick={closePasswordModal}
+              className="text-gray-500 hover:text-gray-800 disabled:opacity-50"
+              disabled={loading}
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+          
+          <form onSubmit={handlePasswordSubmit} className="space-y-4 lg:-mx-20">
+            <PasswordInput
+              name="current"
+              label="Current Password"
+              value={passwordData.current}
+              error={passwordErrors.current}
+              showField={showPassword.current}
+              onToggle={() => togglePasswordVisibility('current')}
+              onChange={handlePasswordChange}
+              disabled={loading}
+            />
+            
+            <PasswordInput
+              name="new"
+              label="New Password"
+              value={passwordData.new}
+              error={passwordErrors.new}
+              showField={showPassword.new}
+              onToggle={() => togglePasswordVisibility('new')}
+              onChange={handlePasswordChange}
+              disabled={loading}
+            />
+            
+            <PasswordInput
+              name="confirm"
+              label="Confirm New Password"
+              value={passwordData.confirm}
+              error={passwordErrors.confirm}
+              showField={showPassword.confirm}
+              onToggle={() => togglePasswordVisibility('confirm')}
+              onChange={handlePasswordChange}
+              disabled={loading}
+            />
+            
+            <div className="flex gap-3 pt-4">
+              <button
+                type="submit"
+                className={profileStyles.buttonPrimary}
+                disabled={loading}
+              >
+                {loading ? 'Updating...' : 'Update Password'}
+              </button>
+              <button
+                type="button"
+                onClick={closePasswordModal}
+                className={profileStyles.buttonSecondary}
+                disabled={loading}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </Modal>
+   
     </div>
   )
 }
