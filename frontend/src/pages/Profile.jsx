@@ -101,7 +101,7 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const data = await handleApiRequest("get","/user/me");
+        const data = await handleApiRequest("get","/users/me");
       } catch (error) {
         
       }
