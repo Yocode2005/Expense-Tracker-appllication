@@ -113,6 +113,8 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
     };
     fetchUserData();
   },[handleApiRequest]);
+
+  // input change
   return (
     <div>Profile</div>
   )
