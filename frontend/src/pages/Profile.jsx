@@ -136,7 +136,7 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
   // to save the profile
   const handleSaveProfile = async() => {
     try {
-      const data = await handleApiRequest("put","/user/profile",tempUser);
+      const data = await handleApiRequest("put","/users/profile",tempUser);
       if(data){
         const updatedUser = data.user || data;
         setUser(updatedUser);
@@ -170,6 +170,27 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
     setPasswordErrors(errors);
     return Object.keys(errors).length === 0;
   }, [passwordData]);
+
+  // to change the password
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+    if(!validatePassword()) return;
+
+    try {
+      await handleApiRequest("put","users/password",{
+        currentPassword: passwordData.current,
+        newPassword: passwordData.new,
+      });
+      toast.success("Password changed successfully!");
+      setShowPasswordModal(false);
+      setPasswordData({current: "",new: "",confirm: ""});
+      setPasswordErrors({});
+
+    
+    } catch (error) {
+      
+    }
+  }
   return (
     <div>Profile</div>
   )
