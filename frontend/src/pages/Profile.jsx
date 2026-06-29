@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
 import { profileStyles } from '../assets/dummyStyles'
 import Modal from "react-modal";
-import { Eye, EyeOff, User } from 'lucide-react';
+import { Eye, EyeOff, Lock, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
 import axios from "axios";
@@ -283,9 +283,27 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
                     )
                   }
               </div>
+              <div className={profileStyles.card}>
+                <h2 className={profileStyles.cardTitle}>
+                  <Lock className={profileStyles.icon} />
+                  Account Security
+                </h2>
+                  <div className='space-y-4'>
+                    <div className={profileStyles.securityItem}>
+                        <div>
+                          <p className={profileStyles.securityText}>Password</p>
+                        </div>
+                        <button onClick={() => setShowPasswordModal(true)} className={profileStyles.changeButton}disabled={loading}>Change</button>
+                    </div>
+                  </div>
+                  <button onClick={handleLogout} className={`${profileStyles.buttonPrimary} mt-6 w-full hover:opacity-90 transition-opacity`}disabled={loading}>
+                    {loading ? "Processing..." : "Logout"}
+                  </button>
+              </div>
           </div>
         </div>
       </div>
+      
     </div>
   )
 }
