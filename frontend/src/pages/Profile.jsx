@@ -3,7 +3,7 @@ import { profileStyles } from '../assets/dummyStyles'
 import Modal from "react-modal";
 import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import {toast} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 
 const BASE_URL = "http://localhost:5000/api";
 Modal.setAppElement('#root');
@@ -208,7 +208,20 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
     }
   },[loading]);
   return (
-    <div>Profile</div>
+    <div className={profileStyles.container}>
+       {/* Toast container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </div>
   )
 }
 
