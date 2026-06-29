@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { Eye, EyeOff, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
+import axios from "axios";
 
 const BASE_URL = "http://localhost:5000/api";
 Modal.setAppElement('#root');
@@ -81,7 +82,7 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
         setLoading(true);
         const config = {
             method,
-            url : `${BASE_URL}${endpoint}`,
+            url : `${BASE_URL}${getEndPoints}`,
             headers : {Authorization : `Bearer ${token}`},
         };
         if(data) config.data = data;
@@ -147,7 +148,7 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
         toast.success("Profile updated successfully!");
       }
     } catch (error) {
-      toast.error(err.response?.data?.message || "Failed to update profile");
+      toast.error(error.response?.data?.message || "Failed to update profile");
     }
   };
   const handleCancelEdit = useCallback(() => {
@@ -248,7 +249,39 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
                     </button>
                   )}
                 </div>
+                  {
+                    editMode ? (
+                      <div className='space-y-4'>
+                        <div>
+                          <label className={profileStyles.label}>Full Name</label>
+                          <input type='text' name='name' value={tempUser.name} onChange={handleInputChange} className={profileStyles.input} disabled={loading} />
+                        </div>
 
+                         <div>
+                          <label className={profileStyles.label}>Email Address</label>
+                          <input type='email' name='email' value={tempUser.email} onChange={handleInputChange} className={profileStyles.input} disabled={loading} />
+                        </div>
+                        <div className='flex gap-3 pt-4'>
+                          <button onClick={handleSaveProfile} className={profileStyles.buttonPrimary}
+                          disabled={loading}>
+                            {loading ? "Saving..." : "Save Changes"}
+                          </button>
+                          <button onClick={handleCancelEdit} className={profileStyles.buttonSecondary} disabled={loading}>Cancel</button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className='space-y-4'>
+                        <div>
+                          <p className={profileStyles.label}>Full Name</p>
+                          <p className='font-medium text-gray-800'>{user.name}</p>
+                        </div>
+                        <div>
+                          <p className={profileStyles.label}>Email Address</p>
+                          <p className='font-medium text-gray-800'>{user.email}</p>
+                        </div>
+                      </div>
+                    )
+                  }
               </div>
           </div>
         </div>
