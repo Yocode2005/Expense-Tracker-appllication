@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
 import { profileStyles } from '../assets/dummyStyles'
 import Modal from "react-modal";
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
 
@@ -221,6 +221,38 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
         draggable
         pauseOnHover
       />
+      <div className={profileStyles.mainContainer}>
+        <div className={profileStyles.header}>
+          <div className={profileStyles.avatar}>
+            <User className='w-12 h-12 text-white' />
+          </div>
+          <h1 className={profileStyles.userName}>
+            {user.name || "Loading..."}
+          </h1>
+          <p className={profileStyles.userEmail}>
+            {user.email || "Loading..."}
+          </p>
+        </div>
+        <div className={profileStyles.content}>
+          <div className={profileStyles.grid}>
+              <div className={profileStyles.card}>
+                <div className='flex justify-between items-center mb-6'>
+                  <h2 className={profileStyles.cardTitle}>
+                    <User className={profileStyles.icon} />
+                    Personal Information
+                  </h2>
+                  {!editMode && (
+                    <button onClick={() => setEditMode(true)} className={profileStyles.editButton}
+                    disabled={loading}>
+                      {loading ? 'Loding...' : "Edit"}
+                    </button>
+                  )}
+                </div>
+
+              </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
