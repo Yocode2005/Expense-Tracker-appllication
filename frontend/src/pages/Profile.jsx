@@ -131,6 +131,8 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
   const togglePasswordVisibility = useCallback((field) => {
     setShowPassword(prev => ({ ...prev, [field]: !prev[field] }));
   }, []);
+
+  // to save the profile
   
   return (
     <div>Profile</div>
