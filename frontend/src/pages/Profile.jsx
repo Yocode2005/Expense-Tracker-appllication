@@ -102,8 +102,13 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
     const fetchUserData = async () => {
       try {
         const data = await handleApiRequest("get","/users/me");
+        if(data){
+          const userData = data.user || data;
+          setUser(userData);
+          setTempUser(userData);
+        }
       } catch (error) {
-        
+        toast.error("Failed to load user data");
       }
     }
   })
