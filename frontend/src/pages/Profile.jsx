@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { profileStyles } from '../assets/dummyStyles'
 import Modal from "react-modal";
 import { Eye, EyeOff } from 'lucide-react';
@@ -97,7 +97,16 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
     }
   },[getAuthToken,navigate],)
 
-  // to fetch current user
+  // to fetch current user 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const data = await handleApiRequest("get","/user/me");
+      } catch (error) {
+        
+      }
+    }
+  })
   return (
     <div>Profile</div>
   )
