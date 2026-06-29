@@ -150,7 +150,10 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
       toast.error(err.response?.data?.message || "Failed to update profile");
     }
   };
-  
+  const handleCancelEdit = useCallback(() => {
+    setTempUser(user);
+    setEditMode(false);
+  },[user]);
   return (
     <div>Profile</div>
   )
