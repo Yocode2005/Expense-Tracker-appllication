@@ -186,11 +186,27 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
       setPasswordData({current: "",new: "",confirm: ""});
       setPasswordErrors({});
 
-    
+    // reset password visibility
+    setShowPassword({current: false,new: false, config: false});
     } catch (error) {
-      
+      toast.error(error.response?.data?.message || "Failed to change password");
     }
-  }
+  };
+  const handleLogout = useCallback(() => {
+    onLogout?.();
+    navigate("/signup");
+  },[onLogout,navigate]);
+
+  const closePasswordModal = useCallback(() => {
+    if(!loading){
+       setShowPasswordModal(false);
+      setPasswordData({current: "",new: "",confirm: ""});
+      setPasswordErrors({});
+
+    // reset password visibility
+    setShowPassword({current: false,new: false, config: false});
+    }
+  },[loading]);
   return (
     <div>Profile</div>
   )
