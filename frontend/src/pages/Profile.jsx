@@ -154,6 +154,22 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
     setTempUser(user);
     setEditMode(false);
   },[user]);
+
+   // Password validation
+  const validatePassword = useCallback(() => {
+    const errors = {};
+    if (!passwordData.current) errors.current = 'Current password is required';
+    if (!passwordData.new) {
+      errors.new = 'New password is required';
+    } else if (passwordData.new.length < 8) {
+      errors.new = 'Password must be at least 8 characters';
+    }
+    if (passwordData.new !== passwordData.confirm) {
+      errors.confirm = 'Passwords do not match';
+    }
+    setPasswordErrors(errors);
+    return Object.keys(errors).length === 0;
+  }, [passwordData]);
   return (
     <div>Profile</div>
   )
