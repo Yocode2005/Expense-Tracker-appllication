@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import { profileStyles } from '../assets/dummyStyles'
 import Modal from "react-modal";
 import { Eye, EyeOff } from 'lucide-react';
@@ -110,8 +110,9 @@ const Profile = ({user: onUpdateProfile, onLogout}) => {
       } catch (error) {
         toast.error("Failed to load user data");
       }
-    }
-  })
+    };
+    fetchUserData();
+  },[handleApiRequest]);
   return (
     <div>Profile</div>
   )
