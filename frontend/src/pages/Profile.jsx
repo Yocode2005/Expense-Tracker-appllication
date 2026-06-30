@@ -427,3 +427,5 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
   );
 };
 export default Profile;
+
+// all done about the profile 
