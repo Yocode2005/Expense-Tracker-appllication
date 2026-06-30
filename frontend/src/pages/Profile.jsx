@@ -426,5 +426,4 @@ const Profile = ({ onUpdateProfile, onLogout }) => {
     </div>
   );
 };
-
 export default Profile;
