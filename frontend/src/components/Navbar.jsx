@@ -69,6 +69,7 @@ function Navbar({ user: propUser, onLogout }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  
   return (
     <header className={navbarStyles.header}>
       <div className={navbarStyles.container}>
