@@ -47,6 +47,7 @@ function Navbar({ user: propUser, onLogout }) {
     setMenuOpen((prev) => !prev);
   };
 
+  
   const handleLogout = () => {
     setMenuOpen(false);
     localStorage.removeItem("user");
@@ -57,7 +58,7 @@ function Navbar({ user: propUser, onLogout }) {
     navigate("/login");
   };
 
-  
+
   // closes the toggle menu when clicked outside the box
   useEffect(() => {
     const handleClickOutside = (e) => {
