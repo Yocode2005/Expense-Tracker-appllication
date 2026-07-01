@@ -57,6 +57,7 @@ function Navbar({ user: propUser, onLogout }) {
     navigate("/login");
   };
 
+  
   // closes the toggle menu when clicked outside the box
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -69,7 +70,7 @@ function Navbar({ user: propUser, onLogout }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  
+
   return (
     <header className={navbarStyles.header}>
       <div className={navbarStyles.container}>
