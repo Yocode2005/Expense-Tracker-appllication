@@ -23,9 +23,9 @@ import expenseRouter from './routes/expense.routes.js'
 import dashboardRouter from './routes/dashboard.routes.js';
 
 // routes declaration
-// app.get('/',(req,res) => {
-//         res.send('Hello World!');
-// })
+app.get('/',(req,res) => {
+        res.send('Hello World!');
+})
 app.use("/api/users", userRoutes);
 app.use("/api/incomes",incomeRoutes);
 app.use("/api/expense",expenseRouter);
