@@ -37,7 +37,7 @@ import GaugeCard from "../components/GaugeCard";
 import { Cell, Legend, Pie, ResponsiveContainer, Tooltip,PieChart } from "recharts";
 import AddTransactionModal from "../components/Add";
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = "https://expense-tracker-appllication.onrender.com/api";
 
 const getAuthHeader = () => {
   const token =
