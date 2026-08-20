@@ -24,7 +24,7 @@ import dashboardRouter from './routes/dashboard.routes.js';
 
 // routes declaration
 app.get('/',(req,res) => {
-        res.send('Hello World!');
+        res.send('server is running');
 })
 app.use("/api/users", userRoutes);
 app.use("/api/incomes",incomeRoutes);
