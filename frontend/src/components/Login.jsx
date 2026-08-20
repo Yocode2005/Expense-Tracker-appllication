@@ -4,7 +4,7 @@ import { loginStyles } from "../assets/dummyStyles"; // import styles for login 
 import { Eye, EyeOff, Lock, Mail, User } from "lucide-react"; // import User icon from lucide-react
 import axios from "axios"; // import axios for API calls
 
-const Login = ({ onLogin, API_URL = "http://localhost:5000" }) => {
+const Login = ({ onLogin, API_URL = "https://expense-tracker-appllication.onrender.com" }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
