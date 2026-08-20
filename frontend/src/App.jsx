@@ -15,7 +15,7 @@ import Income from "./pages/Income.jsx";
 import Expense from "./pages/Expense.jsx";
 import Profile from "./pages/Profile.jsx";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://expense-tracker-appllication.onrender.com";
 
 // to get transsaction from loclal storage
 const getTransactionsFromStorage = () => {
