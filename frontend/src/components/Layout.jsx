@@ -27,7 +27,7 @@ import axios from "axios";
 import { Outlet } from "react-router-dom";
 // import { get } from 'mongoose';
 
-const API_BASE = import.meta.env.VITE_BASE_URL || "http://localhost:5000/api";
+const API_BASE = import.meta.env.VITE_BASE_URL || "https://expense-tracker-appllication.onrender.com/api";
 const CATEGORY_ICONS = {
   // mapping of category names to icons
   Food: <Utensils className="w-4 h-4" />,
