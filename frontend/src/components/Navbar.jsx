@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 
-const Base_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000/api";
+const Base_URL = import.meta.env.VITE_BASE_URL || "https://expense-tracker-appllication.onrender.com/api";
 
 function Navbar({ user: propUser, onLogout }) {
   const navigate = useNavigate();
